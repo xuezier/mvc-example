@@ -1,6 +1,6 @@
 import * as Express from 'express';
 
-import {RestController, Res, Get, ConfigContainer} from 'mvc';
+import {RestController, Res, Get, ConfigContainer} from 'mvc-ts';
 
 @RestController('/public')
 export class PagesController {

@@ -1,11 +1,10 @@
-import {Service, Inject} from 'mvc';
-
-import {SmsCode} from '../model';
+import {Service, Inject} from 'mvc-ts';
 
 import {YunPianSms} from '../vendor/YunPianSms';
 
 import {SmsRedisService} from './RedisService';
 import { SmsError } from '../vendor/model/YunPianSmsConfigModel';
+import { SmsCode } from '../model';
 
 @Service()
 export class YunPianService {
@@ -20,7 +19,7 @@ export class YunPianService {
   private redis: SmsRedisService;
 
   public generateSmsCode(): string {
-    return parseInt(Math.random() * 10000) + '';
+    return (~~(Math.random() * 10000)) + '';
   }
 
   public async sendSmsCode(mobile: string, code: string) {
@@ -28,7 +27,7 @@ export class YunPianService {
 
     try {
       sms = await this.yunpian.sendSingleSmsCode(mobile, code);
-    } catch (e: SmsError) {
+    } catch (e) {
       if (e instanceof Error) {
         throw e;
       }

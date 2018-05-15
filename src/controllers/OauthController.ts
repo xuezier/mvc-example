@@ -1,7 +1,6 @@
-import {Get, Post, Res, Req, RestController, Inject, QueryParam, BodyParam, Next, ApplicationLoader} from 'mvc';
+import {Get, Post, Res, Req, RestController, Inject, QueryParam, BodyParam, Next, ApplicationLoader} from 'mvc-ts';
 
 import * as Express from 'express';
-import { ApplicationLoader } from '../../server';
 
 import * as OauthServer from 'oauth2-server';
 import { OauthAuthorizationCode } from '../model/oauth/OauthAuthorizationCode';

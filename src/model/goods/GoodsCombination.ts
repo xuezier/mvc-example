@@ -1,6 +1,6 @@
 import * as Mongodb from 'mongodb';
 
-import {Model, Collection} from 'mvc';
+import {Model, Collection} from 'mvc-ts';
 
 @Collection('goods.combination')
 @Model()

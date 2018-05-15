@@ -1,8 +1,6 @@
-import {Get, Res, RestController, Inject, QueryParam} from 'mvc';
+import {Get, Res, RestController, Inject, QueryParam, MongoContainer} from 'mvc-ts';
 
 import {UserService} from '../services';
-
-import {MongoContainer} from 'mvc/lib/data/MongoContainer';
 
 import {YunPianSms} from '../vendor/YunPianSms';
 import {Bmob} from '../vendor/Bmob';
@@ -26,7 +24,7 @@ export class HealthcheckController {
       let user = await this.userService.findById('5ad45eea4dd34c98abd9fea9');
       await this.bmob.sendSmsCode('18705928625');
       res.sendJson({name: 'heiheihei', user});
-      this.yunpian.send()
+      // this.yunpian.send()
     }
 
 }

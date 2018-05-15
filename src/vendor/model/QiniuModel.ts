@@ -1,6 +1,6 @@
 import * as Qiniu from 'qiniu';
 
-import {Model, ConfigContainer} from 'mvc';
+import {Model, ConfigContainer} from 'mvc-ts';
 
 @Model()
 export class QiniuConfigModel {
@@ -21,4 +21,5 @@ export class QiniuUploadResultModel {
   hash: string;
   key: string;
   persistenId: string;
+  server_url?: string;
 }

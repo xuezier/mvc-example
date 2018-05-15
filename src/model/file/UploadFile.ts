@@ -1,4 +1,4 @@
-import {Model} from 'mvc';
+import {Model} from 'mvc-ts';
 
 export class UploadFile {
   fieldName: string;

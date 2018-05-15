@@ -1,7 +1,7 @@
 import * as Mongodb from 'mongodb';
 import * as SchemaObject from 'schema-object';
 
-import {Model, Collection} from 'mvc';
+import {Model, Collection} from 'mvc-ts';
 import { ModelSchema } from '../../decorator/ModelSchema';
 
 export const GoodsTypeSchema = new SchemaObject({
@@ -22,4 +22,7 @@ export class GoodsType {
   parent: Mongodb.ObjectID;
   status: string;
   create_at: Date;
+
+  public schema(schema?: any) {}
+  public getCollection(): Mongodb.Collection {}
 }

@@ -2,7 +2,7 @@ import * as Qiniu from 'qiniu';
 import * as Request from 'request';
 import * as Url from 'url';
 
-import {Vendor, Inject} from 'mvc';
+import {Vendor, Inject} from 'mvc-ts';
 
 import {QiniuConfigModel, QiniuUploadResultModel} from './model/QiniuModel';
 
@@ -43,7 +43,7 @@ export class QiNiu {
    * @param key
    */
   private _generateToken(key: string): string {
-    const putPolicy: Qiniu.rs.PutPolicy = {
+    const putPolicy = {
       scope: `${this.config.BUCKET}:${key}`,
       deadline: Math.floor(+new Date) + 3600
     };
@@ -62,7 +62,7 @@ export class QiNiu {
    * @param key
    * @param filePath
    */
-  private async _uploadFile(token: string, key: string, filePath: string) {
+  private async _uploadFile(token: string, key: string, filePath: string): Promise<any> {
     const formUploader = new Qiniu.form_up.FormUploader();
 
     return new Promise((resolve, reject) => {
@@ -82,7 +82,7 @@ export class QiNiu {
    * @param filePath
    * @param folder
    */
-  public async upload(savekey: string, filePath: string, folder: string[]): QiniuUploadResultModel {
+  public async upload(savekey: string, filePath: string, folder: string[]): Promise<QiniuUploadResultModel> {
     const key = this._reGenerateSavekey(savekey, folder);
 
     const token = this._generateToken(key);
@@ -99,13 +99,13 @@ export class QiNiu {
    * @param key
    * @param stream
    */
-  private async _uploadFileByStream(token: string, key: string, stream: any) {
+  private async _uploadFileByStream(token: string, key: string, stream: any): Promise<any> {
     const formUploader = new Qiniu.form_up.FormUploader();
 
     return new Promise((resolve: Function, reject: Function) => {
       var extra = new Qiniu.form_up.PutExtra();
 
-      formUploader.putStream(token, key, stream, extra, (err: Error, ret: QiniuUploadResultModel, info: {}) => {
+      formUploader.putStream(token, key, stream, extra, (err: Error, ret: QiniuUploadResultModel, info: {statusCode: number}) => {
         if(err) return reject(err);
 
         if(info.statusCode === 200) return resolve(ret);
@@ -121,7 +121,7 @@ export class QiNiu {
    * @param stream
    * @param folder
    */
-  public async streamUpload(savekey: string, stream: any, folder: string[]): QiniuUploadResultModel {
+  public async streamUpload(savekey: string, stream: any, folder: string[]): Promise<QiniuUploadResultModel> {
 
     const key = this._reGenerateSavekey(savekey, folder);
     const token = this._generateToken(key);
@@ -139,7 +139,7 @@ export class QiNiu {
    * @param deadTime
    * @param rename
    */
-  private _generateDownloadLink(key: string, deadTime: number, rename: string): string {
+  private _generateDownloadLink(key: string, deadTime?: number, rename?: string): string {
     let url: string = Url.resolve(this.config.SERVER_URL, key);
 
     if(rename) url += `?download/${encodeURIComponent(rename)}`;
@@ -174,7 +174,7 @@ export class QiNiu {
    * @param key
    * @param deadTime
    */
-  public generateLink(key: string, deadTime: number) {
+  public generateLink(key: string, deadTime: number): string {
     if(arguments.length > 2) return this.generateDownloadLink.apply(this, arguments);
 
     return this._generateDownloadLink(key, deadTime);

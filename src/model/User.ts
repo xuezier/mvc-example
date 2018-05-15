@@ -1,50 +1,12 @@
 import * as Mongodb from 'mongodb';
 import * as SchemaObject from 'schema-object';
 
-import {Collection, Model} from 'mvc';
+import {Collection, Model} from 'mvc-ts';
+import { ModelSchema } from '../decorator/ModelSchema';
 
 export enum Sex {
   F='F',
   M='M'
-}
-
-@Collection('user')
-@Model()
-export class User {
-  _id: Mongodb.ObjectID;
-  bound: Mongodb.ObjectID;
-  email: string;
-  email_verified: boolean;
-  mobile: string;
-  mobile_verified: boolean;
-  name: string;
-  description: string;
-  avatar: string;
-  password: {
-    hash: string;
-    salt: string;
-  };
-  birthdate: Date;
-  address: {
-      country: string;
-      province: string;
-      city: string;
-      address: string;
-      district: string;
-  };
-  sex: string;
-  locale: string;
-  timezone: string;
-  activiated: boolean;
-  create_at: Date;
-  wechat: {
-    openid: string;
-    unionid: string;
-  };
-  last_login: {
-    type: string;
-    time: Date;
-  };
 }
 
 export const UserSchema = new SchemaObject({
@@ -81,6 +43,45 @@ export const UserSchema = new SchemaObject({
   })
 });
 
-export function schema(user: User): User {
-  return new UserSchema(user).toObject();
+@Collection('user')
+@Model()
+@ModelSchema(UserSchema)
+export class User {
+  _id: Mongodb.ObjectID;
+  bound: Mongodb.ObjectID;
+  email: string;
+  email_verified: boolean;
+  mobile: string;
+  mobile_verified: boolean;
+  name: string;
+  description: string;
+  avatar: string;
+  password: {
+    hash: string;
+    salt: string;
+  };
+  birthdate: Date;
+  address: {
+      country: string;
+      province: string;
+      city: string;
+      address: string;
+      district: string;
+  };
+  sex: string;
+  locale: string;
+  timezone: string;
+  activiated: boolean;
+  create_at: Date;
+  wechat: {
+    openid: string;
+    unionid: string;
+  };
+  last_login: {
+    type: string;
+    time: Date;
+  };
+
+  public getCollection(): Mongodb.Collection {}
+  public schema(schema: any): any {}
 }

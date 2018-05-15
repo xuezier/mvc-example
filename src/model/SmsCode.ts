@@ -1,6 +1,6 @@
 import * as Mongodb from 'mongodb';
 
-import {Model, Collection} from 'mvc';
+import {Model, Collection} from 'mvc-ts';
 
 @Collection('sms.code')
 @Model()
@@ -14,4 +14,6 @@ export class SmsCode {
   fee: number;
   unit: string;
   sid: number;
+
+  public getCollection(): Mongodb.Collection {}
 }

@@ -1,11 +1,12 @@
 import * as Crypto from 'crypto';
 import * as Path from 'path';
 import * as Http from 'http';
+import * as Stream from 'stream';
 import * as QueryString from 'querystring';
 
 import * as Request from 'request';
 
-import {Vendor, Inject} from 'mvc';
+import {Vendor, Inject} from 'mvc-ts';
 import { WechatConfigModel, WechatAccessTokenModel, WechatUserModel } from './model/WechatModel';
 import { DefinedError } from '../model/DefinedError';
 import { User, OauthClient } from '../model';
@@ -83,7 +84,7 @@ export class Wechat {
     const info: WechatUserModel = await this._request(url, 'get');
 
     if(info.errcode) {
-      throw new DefinedError(400, token.errmsg);
+      throw new DefinedError(400, info.errmsg);
     }
 
     return info;
@@ -105,9 +106,9 @@ export class Wechat {
     await this.wechatUser.getCollection().findOneAndUpdate()
   }
 
-  private async _request(url: string, method: string) {
+  private async _request(url: string, method: string): Promise<any> {
     return new Promise((resolve, reject) => {
-      Request[method](url, (err: Error, res: Http.ImcomingMessage, body: string) => {
+      Request[method](url, (err: Error, res: Http.ClientResponse, body: string) => {
         if(err) {
           return reject(err);
         }

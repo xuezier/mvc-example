@@ -1,6 +1,6 @@
 import * as Mongodb from 'mongodb';
 
-import {Service, Inject} from 'mvc';
+import {Service, Inject} from 'mvc-ts';
 import { GoodsType } from '../../model/goods/Type';
 import { DefinedError } from '../../model/DefinedError';
 
@@ -29,7 +29,7 @@ export class GoodsTypeService {
     return await this.goodsType.getCollection().findOne({_id});
   }
 
-  public async getTypesWithParent(parent: Mongodb.ObjectID): GoodsType[] {
+  public async getTypesWithParent(parent: Mongodb.ObjectID): Promise<GoodsType[]> {
     return await this.goodsType.getCollection().find({parent, status: 'active'}).toArray();
   }
 
@@ -52,7 +52,7 @@ export class GoodsTypeService {
     return await this.goodsType.getCollection().count({parent: {$exists: false}, status: 'active'});
   }
 
-  public async getTypesWithoutParent(): Array {
+  public async getTypesWithoutParent(): Promise<GoodsType[]> {
     return await this.goodsType.getCollection().find({parent: {$exists: false}, status: 'active'}).toArray();
   }
 
@@ -72,7 +72,7 @@ export class GoodsTypeService {
     return result.value;
   }
 
-  public async modifyType(_id: MongodbObjectID, info: GoodsType) {
+  public async modifyType(_id: Mongodb.ObjectID, info: GoodsType) {
     return await this._modifyType(_id, info);
   }
 }

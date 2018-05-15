@@ -7,9 +7,9 @@ import * as Express from 'express';
 export class SendJsonMiddleware implements IMiddleware {
   public use(@Res() res: Express.Response, @Next() next: Express.NextFunction) {
     res.sendJson = function sendJson(
-      status: number|object,
-      data: object|string,
-      message: string|undefined) {
+      status: number | object,
+      data: object | string,
+      message: string | undefined | object) {
 
       if (typeof status === 'object') {
         message = data;

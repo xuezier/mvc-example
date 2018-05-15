@@ -1,6 +1,6 @@
 import * as Express from 'express';
 
-import {RestController, Get, Post, Res, Req, Inject, QueryParam, BodyParam, Next} from 'mvc';
+import {RestController, Get, Post, Res, Req, Inject, QueryParam, BodyParam, Next} from 'mvc-ts';
 
 import {YunPianSms} from '../vendor/YunPianSms';
 import { YunPianService } from '../services/YunPianService';

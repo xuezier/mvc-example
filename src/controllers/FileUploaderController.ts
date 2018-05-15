@@ -1,7 +1,7 @@
 import * as Express from 'express';
 import * as Mongodb from 'mongodb';
 
-import {Get, Post, Res, Req, RestController, Inject, QueryParam, PathParam} from 'mvc';
+import {Get, Post, Res, Req, RestController, Inject, QueryParam, PathParam} from 'mvc-ts';
 import { QiNiu } from '../vendor/Qiniu';
 import { FileService } from '../services';
 import { UploadFile, File } from '../model';
@@ -15,7 +15,7 @@ export class FileUploaderController {
   @Inject()
   private fileService: FileService;
 
-  @Post()
+  @Post('/')
   public async uploadAction(@Req() req: Express.Request, @Res() res: Express.Response) {
     const files: {[key: string]: UploadFile} = req.files
 

@@ -1,6 +1,7 @@
 import * as Mongodb from 'mongodb';
+import * as Reids from 'redis';
 
-import {Service, Redis} from 'mvc';
+import {Service, Redis} from 'mvc-ts';
 import { OauthToken, User } from '../model';
 
 @Service()
@@ -8,35 +9,36 @@ import { OauthToken, User } from '../model';
 export class ImageCodeRedisService {
   private codeId: number = 0;
   private ttl: number = 180;
+  private client: Reids.client;
 
-  public async mobileExists(mobile: string): boolean {
+  public async mobileExists(mobile: string): Promise<boolean> {
     const exists: number = await this.client.exists(`.mobile${mobile}`);
     return exists === 1 ? true : false;
   }
 
-  public async delOldCode(mobile: string): boolean {
+  public async delOldCode(mobile: string): Promise<boolean> {
     const code = await this.getCodeByMobile(mobile);
     await this.client.del(code);
     await this.client.del(`.mobile${mobile}`);
     return true;
   }
 
-  public async codeExists(code: string): boolean {
+  public async codeExists(code: string): Promise<boolean> {
     const exists: number = await this.client.exists(code);
     return exists === 1 ? true : false;
   }
 
-  public async bindImageCodeWithMobile(code: string, mobile: string): boolean {
+  public async bindImageCodeWithMobile(code: string, mobile: string): Promise<boolean> {
     await this.client.setex(code, this.ttl, mobile);
     await this.client.setex(`.mobole${mobile}`, this.ttl, code);
     return true;
   }
 
-  public async getMobileByCode(code: string): string {
+  public async getMobileByCode(code: string): Promise<string> {
     return await this.client.get(code);
   }
 
-  public async getCodeByMobile(mobile: string): string {
+  public async getCodeByMobile(mobile: string): Promise<string> {
     return await this.client.get(`.mobile${mobile}`);
   }
 }
@@ -44,12 +46,13 @@ export class ImageCodeRedisService {
 @Service()
 @Redis({name: 'sms.code', prefix: 'sms.code'})
 export class SmsRedisService {
+  private client: Reids.client;
 
-  public async bindCodeWithMobile(mobile: string, code: string): string {
+  public async bindCodeWithMobile(mobile: string, code: string): Promise<string> {
     return await this.client.setex(mobile, 60 * 5, code);
   }
 
-  public async getCodeByMobile(mobile: string): string {
+  public async getCodeByMobile(mobile: string): Promise<string> {
     return await this.client.get(mobile);
   }
 
@@ -66,7 +69,7 @@ export class SmsRedisService {
     await this.client.expire(key, ttl);
   }
 
-  public async getCodeRequestLimit(mobile): number {
+  public async getCodeRequestLimit(mobile): Promise<number> {
     const key = `.request${mobile}`;
 
     const limit: number = await this.client.get(key);
@@ -78,6 +81,7 @@ export class SmsRedisService {
 @Service()
 @Redis({name: 'oauth.token', prefix: 'oauth.token', db: 1})
 export class OauthAccessTokenRedisService {
+  private client: Reids.client;
 
   public async setAccessToken(token: OauthToken) {
     token.user = token.user.toHexString();
@@ -105,7 +109,7 @@ export class OauthAccessTokenRedisService {
   }
 
   public async getUser(key: string) {
-    const userString: stromg = await this.client.get(`.user${key}`);
+    const userString: string = await this.client.get(`.user${key}`);
     if(!userString) return null;
 
     const user: User = JSON.parse(userString);

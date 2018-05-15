@@ -47,7 +47,7 @@ export class ApplicationLoader {
   // TODO: add external components support
   private _components: string[];
 
-  get server(){
+  get server() {
     return this._server;
   }
 
@@ -79,7 +79,7 @@ export class ApplicationLoader {
     return this._dbDir;
   }
 
-  get port(): string {
+  get port(): string | number {
     return this._port;
   }
 

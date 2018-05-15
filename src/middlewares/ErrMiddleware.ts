@@ -1,5 +1,5 @@
 import * as Express from 'express';
-import {ErrorMiddleware, IMiddleware, Err, Res} from 'mvc';
+import {ErrorMiddleware, IMiddleware, Err, Res} from 'mvc-ts';
 
 import {DefinedErrors} from '../lib/DefinedError';
 import { DefinedError } from '../model/DefinedError';
@@ -25,10 +25,7 @@ export class ErrMiddleware implements IMiddleware {
       if(!err.description) err.description = err.message;
       e = err;
     } else {
-      e = {
-        status: 500,
-        message
-      };
+      e = new DefinedError(500, message);
       console.error(err.stack);
     }
     res.status(e.status);

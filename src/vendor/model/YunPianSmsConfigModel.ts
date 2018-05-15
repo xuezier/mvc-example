@@ -1,4 +1,4 @@
-import {Model, ConfigContainer} from 'mvc';
+import {Model, ConfigContainer} from 'mvc-ts';
 
 @Model()
 export class YunPianSmsConfigModel {
@@ -8,7 +8,7 @@ export class YunPianSmsConfigModel {
   SENDSINGLEVOICECODEURL: string = 'https://voice.yunpian.com/v2/voice/send.json';
 }
 
-export interface SmsError {
+export class SmsError extends Error {
   code: number;
   msg: string;
   count: number;

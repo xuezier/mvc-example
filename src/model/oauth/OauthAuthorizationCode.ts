@@ -1,5 +1,5 @@
 import * as Mongodb from 'mongodb';
-import {Collection, Model} from 'mvc';
+import {Collection, Model} from 'mvc-ts';
 
 export enum OauthAuthorizationCodeStatus {
   expired = 'EXPIRED',
@@ -17,4 +17,6 @@ export class OauthAuthorizationCode {
   client: Mongodb.ObjectID;
   user: Mongodb.ObjectID;
   status: OauthAuthorizationCodeStatus;
+
+  public getCollection(): Mongodb.Collection {}
 }

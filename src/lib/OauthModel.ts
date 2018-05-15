@@ -1,4 +1,4 @@
-import {MongoContainer, Inject, Model, Controller} from 'mvc';
+import {MongoContainer, Inject, Model, Controller} from 'mvc-ts';
 
 import {User, OauthClient, OauthToken, OauthTokenStatus} from '../model';
 
@@ -49,7 +49,7 @@ export class OauthModel {
    * @param {string} authorizationCode
    * @memberof OauthModel
    */
-  public async getAuthorizationCode(authorizationCode: string): OauthAuthorizationCode {
+  public async getAuthorizationCode(authorizationCode: string): Promise<OauthAuthorizationCode> {
     const db = MongoContainer.getDB();
 
     let code: OauthAuthorizationCode = await db.oauth.authorization_code.findOne({authorizationCode: authorizationCode});
@@ -81,7 +81,7 @@ export class OauthModel {
    * @returns {OauthAuthorizationCode}
    * @memberof OauthModel
    */
-  public async saveAuthorizationCode(code: OauthAuthorizationCode, client: OauthClient, user: User): OauthAuthorizationCode {
+  public async saveAuthorizationCode(code: OauthAuthorizationCode, client: OauthClient, user: User): Promise<OauthAuthorizationCode> {
     const db = MongoContainer.getDB();
 
     code.user = user._id;
@@ -99,7 +99,7 @@ export class OauthModel {
    * @returns {boolean}
    * @memberof OauthModel
    */
-  public async revokeAuthorizationCode(code: OauthAuthorizationCode): boolean {
+  public async revokeAuthorizationCode(code: OauthAuthorizationCode): Promise<boolean> {
     const db = MongoContainer.getDB();
 
     await db.oauth.authorization_code.findOneAndUpdate({_id: code._id}, {$set: {status: OauthAuthorizationCodeStatus.expired}});

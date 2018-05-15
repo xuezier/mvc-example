@@ -1,6 +1,6 @@
 import * as Express from 'express';
 
-import {Middleware, IMiddleware, BodyParam, Res, Next, Inject, Get} from 'mvc';
+import {Middleware, IMiddleware, BodyParam, Res, Next, Inject, Get} from 'mvc-ts';
 import { YunPianService } from '../services/YunPianService';
 import { SmsRedisService } from '../services/RedisService';
 

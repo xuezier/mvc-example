@@ -1,4 +1,4 @@
-import {Middleware, IMiddleware, Data, Next} from 'mvc';
+import {Middleware, IMiddleware, Data, Next} from 'mvc-ts';
 import * as Express from 'express';
 
 @Middleware({order: 0})

@@ -1,6 +1,6 @@
 import {createCanvas} from 'canvas';
 
-import {Component, Inject} from 'mvc';
+import {Component, Inject} from 'mvc-ts';
 import { ImageCodeRedisService } from '../services';
 
 @Component()
@@ -9,7 +9,7 @@ export class CodePen {
   private imageCodeRedis: ImageCodeRedisService;
 
   private codeLength: number = 4;
-  private fontsizes: number[] = [15, 17, 19, 21, 23, 25];
+  private fontsizes: string[] = ['15', '17', '19', '21', '23', '25'];
   private colors: string[] = ['rgb(255,165,0)', 'rgb(16,78,139)', 'rgb(0,139,0)', 'rgb(255,0,0)'];
   private trans: {c: number[], b: number[]} = {c: [-0.108, 0.108], b: [-0.05, 0.05]};
   private templateChars: string = 'ABCDEFGHIJKLMNPQRSTUVWXYZ123456789';
@@ -39,14 +39,14 @@ export class CodePen {
       start += this.distance;
     }
 
-    const pngStream: Stream = canvas.pngStream();
+    const pngStream = canvas.pngStream();
     return {code, pngStream};
   }
 
-  private async _generateCode(): string {
+  private async _generateCode(): Promise<string> {
     let code: string = '';
     for(let i = 0; i < this.codeLength; i++) {
-      code += this.templateChars.substr(parseInt(Math.random() * 35), 1);
+      code += this.templateChars.substr(~~(Math.random() * 35), 1);
     }
 
     const exists = await this.imageCodeRedis.codeExists(code);

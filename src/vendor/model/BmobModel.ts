@@ -1,4 +1,4 @@
-import {Model, ConfigContainer} from 'mvc';
+import {Model, ConfigContainer} from 'mvc-ts';
 
 @Model()
 export class BmobConfigModel {

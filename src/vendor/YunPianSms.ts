@@ -2,7 +2,7 @@ import * as Http from 'http';
 
 import * as request from 'request';
 
-import {Vendor, ConfigContainer, Inject} from 'mvc';
+import {Vendor, ConfigContainer, Inject} from 'mvc-ts';
 
 import {YunPianSmsConfigModel, SmsCodeTemplate} from './model/YunPianSmsConfigModel';
 
@@ -32,7 +32,7 @@ export class YunPianSms {
    * @param {String} mobile
    * @param {String} text
    */
-  private async _sendSingleSms(url: string, mobile: string, text: string) {
+  private async _sendSingleSms(url: string, mobile: string, text: string): Promise<any> {
     if(this.sends.has(mobile))
       return Promise.reject('mobile_sending');
     this.sends.set(mobile, true);
@@ -52,12 +52,12 @@ export class YunPianSms {
 
         if(err) return reject(err);
 
-        body = JSON.parse(body);
+        let result: {code?: number} = JSON.parse(body);
 
-        if (body.code) {
-          return reject(body);
+        if (result.code) {
+          return reject(result);
         }
-        resolve(body);
+        resolve(result);
       });
     });
   }

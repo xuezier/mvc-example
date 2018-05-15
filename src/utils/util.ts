@@ -46,8 +46,8 @@ export function testEmail(email: string): boolean {
  * check mobile format
  * @param {Number} mobile
  */
-export function testMobile(mobile: number): boolean {
+export function testMobile(mobile: number | string): boolean {
   let flag = true;
-  (!mobileReg.test(mobile)) ? flag = false : flag = true;
+  (!mobileReg.test(String(mobile))) ? flag = false : flag = true;
   return flag;
 }

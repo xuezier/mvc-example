@@ -2,7 +2,7 @@ import * as Http from 'http';
 
 import * as request from 'request';
 
-import {Vendor, ConfigContainer, Inject} from 'mvc';
+import {Vendor, ConfigContainer, Inject} from 'mvc-ts';
 
 import {BmobConfigModel, SmsCodeTemplate, SmsCodeRetrunTemplate} from './model/BmobModel';
 
@@ -39,7 +39,7 @@ export class Bmob {
       request.post(url, {
         headers: this.Headers,
         body: JSON.stringify(template)
-      }, (err: Error, res: Http.ImcomingMessage, body: string) => {
+      }, (err: Error, res: Http.ClientResponse, body: string) => {
         this.sends.delete(mobile);
 
         if (err) return reject(err);

@@ -1,5 +1,5 @@
 import * as Mongodb from 'mongodb';
-import {Collection, Model} from 'mvc';
+import {Collection, Model} from 'mvc-ts';
 
 export enum OauthTokenStatus {
   expired = 'EXPIRED',

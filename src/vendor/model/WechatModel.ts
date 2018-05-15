@@ -1,4 +1,5 @@
-import {Model, ConfigContainer, Collection} from 'mvc';
+import * as Mongodb from 'mongodb';
+import {Model, ConfigContainer, Collection} from 'mvc-ts';
 
 @Model()
 export class WechatConfigModel {
@@ -26,11 +27,13 @@ export class WechatAccessTokenModel {
 
   errcode: number;
   errmsg: string;
+
+  public getCollection(): Mongodb.Collection {}
 }
 
 export enum Sex {
-  "M" = 1,
-  "F" = 2,
+  'M' = 1,
+  'F' = 2,
 }
 
 @Collection('wechat.user')
@@ -45,4 +48,9 @@ export class WechatUserModel {
   headimgurl: string;
   privilege: string;
   unionid: string;
+
+  errcode: number;
+  errmsg: string;
+
+  public getCollection(): Mongodb.Collection {}
 }

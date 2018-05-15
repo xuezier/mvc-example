@@ -1,7 +1,7 @@
 import * as Express from 'express';
 import * as Mongodb from 'mongodb';
 
-import {RestController, Post, Get, Put, Delete, Req, Res, Data, Next, QueryParam, PathParam, Inject} from 'mvc';
+import {RestController, Post, Get, Put, Delete, Req, Res, Data, Next, QueryParam, PathParam, Inject} from 'mvc-ts';
 import { GoodsType } from '../../model/goods/Type';
 import { GoodsTypeService } from '../../services';
 import { DefinedError } from '../../model/DefinedError';

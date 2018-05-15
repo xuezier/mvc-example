@@ -1,6 +1,6 @@
 import * as Mongodb from 'mongodb';
 
-import {Service, Inject} from 'mvc';
+import {Service, Inject} from 'mvc-ts';
 import { GoodsModel } from '../../model';
 
 @Service()

@@ -1,6 +1,6 @@
 import * as Mongodb from 'mongodb';
 
-import {Service, MongoContainer, Inject} from 'mvc';
+import {Service, MongoContainer, Inject} from 'mvc-ts';
 
 import {User} from '../model/User';
 
@@ -50,19 +50,19 @@ export class UserService {
     return user;
   }
 
-  public async findByMobile(mobile: string): User {
+  public async findByMobile(mobile: string): Promise<User> {
     const user: User = await this.user.getCollection().findOne({mobile});
 
     return user;
   }
 
-  public async findByEmail(email: string): User {
+  public async findByEmail(email: string): Promise<User> {
     const user: User = await this.user.getCollection().findOne({email});
 
     return user;
   }
 
-  public async findById(_id: string): User {
+  public async findById(_id: string): Promise<User> {
     try {
       const user: User = await this.user.getCollection().findOne({_id: Mongodb.ObjectID(_id)});
       return user;
@@ -76,7 +76,7 @@ export class UserService {
     return user;
   }
 
-  public async findByIdWithoutPassword(_id: Mongodb.ObjectID): User {
+  public async findByIdWithoutPassword(_id: Mongodb.ObjectID): Promise<User> {
     return await this.user.getCollection().findOne({_id}, {password: 0});
   }
 

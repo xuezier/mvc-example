@@ -1,4 +1,4 @@
-import {Middleware, IMiddleware, Res, Req, Next, ApplicationLoader, Inject} from 'mvc';
+import {Middleware, IMiddleware, Res, Req, Next, ApplicationLoader, Inject} from 'mvc-ts';
 
 import * as Express from 'express';
 import * as OauthServer from 'oauth2-server';

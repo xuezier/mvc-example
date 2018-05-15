@@ -2,7 +2,7 @@ import * as Mongodb from 'mongodb';
 import * as SchemaObject from 'schema-object';
 import * as _ from 'lodash';
 
-import {Model, Collection} from 'mvc';
+import {Model, Collection} from 'mvc-ts';
 import { DefinedError } from './DefinedError';
 import { ModelSchema } from '../decorator/ModelSchema';
 
@@ -43,4 +43,7 @@ export class UserShippingAddress {
   email: string;
   telephone: string;
   create_at: Date;
+
+  public schema(schema?: any): any {}
+  public getCollection(): Mongodb.Collection {}
 }

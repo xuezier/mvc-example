@@ -1,8 +1,8 @@
 import * as Express from 'express';
 import * as Mongodb from 'mongodb';
 
-import {RestController, Post, Get, Put, Delete, Res, Req, BodyParam, PathParam, Inject} from 'mvc';
-import { UserShippingAddress, schema } from '../../model/UserShippingAddress';
+import {RestController, Post, Get, Put, Delete, Res, Req, BodyParam, PathParam, Inject} from 'mvc-ts';
+import { UserShippingAddress, UserShippingAddressSchema } from '../../model/UserShippingAddress';
 import { User } from '../../model';
 import { UserShippingAddressService } from '../../services/UserShippingAddressService';
 import { DefinedError } from '../../model/DefinedError';
@@ -20,7 +20,7 @@ export class UserShippingAddressController {
   public async createAddressAction(@Req() req: Express.Resquest, @Res() res: Express.Response) {
     const body: UserShippingAddress = req.body;
 
-    const address = this.shippingAddress.schema(body);
+    const address: UserShippingAddress = this.shippingAddress.schema(body);
     const user: User = req.user;
     address.user = user._id;
 

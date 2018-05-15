@@ -1,7 +1,7 @@
 import * as UUIDV4 from 'uuid/v4';
 import * as Mime from 'mime';
 
-import {Service, Inject} from 'mvc';
+import {Service, Inject} from 'mvc-ts';
 
 import {QiNiu} from '../vendor/Qiniu';
 import { UploadFile, File } from '../model';

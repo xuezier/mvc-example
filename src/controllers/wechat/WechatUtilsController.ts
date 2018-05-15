@@ -2,7 +2,7 @@ import * as QueryString from 'querystring';
 
 import * as Express from 'express';
 
-import {RestController, Get, Post, Req, Res, BodyParam, QueryParam, Inject} from 'mvc';
+import {RestController, Get, Post, Req, Res, BodyParam, QueryParam, Inject} from 'mvc-ts';
 import { Wechat } from '../../vendor/Wechat';
 import { User } from '../../model';
 import { UserService, OauthAccessTokenRedisService } from '../../services';
@@ -40,9 +40,9 @@ export class WechatUtilsController {
 
     let stateArray = state.split('|');
 
-    for(let i = 0; i < (stateArray.length / 2); i++) {
+    for (let i = 0; i < (stateArray.length / 2); i++) {
       let index = i * 2;
-      statedata[stateArray[index]] = stateArray[index+1];
+      statedata[stateArray[index]] = stateArray[index + 1];
     }
 
     // const statedata: {redirect_url: string} = QueryString.parse(state.replace(/\|/g, '='));
@@ -60,7 +60,7 @@ export class WechatUtilsController {
     let user: User = req.user;
     const token = await this.wechat.findAccessTokenByCode(code);
 
-    if(!token) {
+    if (!token) {
       throw new DefinedError(400, 'invalid_authorization_code');
     }
 

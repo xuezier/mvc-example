@@ -1,11 +1,11 @@
-import {Get, Post, Res, Req, RestController, Inject, QueryParam, BodyParam, Next} from 'mvc';
+import {Get, Post, Res, Req, RestController, Inject, QueryParam, BodyParam, Next} from 'mvc-ts';
 
 import {UserService} from '../../services';
 import {User} from '../../model';
 
 import {YunPianSms} from '../../vendor/YunPianSms';
 
-import {MongoContainer} from 'mvc/lib/data/MongoContainer';
+import {MongoContainer} from 'mvc-ts';
 
 import * as Express from 'express';
 import { SmsRedisService } from '../../services/RedisService';

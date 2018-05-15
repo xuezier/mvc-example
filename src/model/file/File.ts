@@ -1,7 +1,7 @@
 import * as Mongodb from 'mongodb';
 import * as SchemaObject from 'schema-object';
 
-import {Model, Collection} from 'mvc';
+import {Model, Collection} from 'mvc-ts';
 import { ModelSchema } from '../../decorator/ModelSchema';
 
 export const FileSchema = new SchemaObject({
