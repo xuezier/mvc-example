@@ -1,11 +1,10 @@
 import * as Express from 'express';
 import * as Mongodb from 'mongodb';
 
-import {RestController, Post, Get, Put, Delete, Req, Res, Data, Next, QueryParam, PathParam, Inject} from 'mvc-ts';
+import {RestController, Post, Get, Put, Delete, Req, Res, Data, Next, QueryParam, PathParam, BodyParam, Inject} from 'mvc-ts';
 import { GoodsType } from '../../model/goods/Type';
 import { GoodsTypeService } from '../../services';
 import { DefinedError } from '../../model/DefinedError';
-import { BodyParam } from '../../../server';
 
 @RestController('/api/goods/type')
 export class GoodsTypeController {
@@ -24,7 +23,7 @@ export class GoodsTypeController {
       body.parent = Mongodb.ObjectID(parent);
     }
 
-    const info = this.goodsType.schema(body);
+    const info: GoodsType = this.goodsType.schema(body);
 
     const type: GoodsType = await this.goodsTypeService.createType(info);
 
@@ -33,7 +32,7 @@ export class GoodsTypeController {
 
   @Get('/')
   public async getTypeListAction(@Res() res: Express.Response) {
-    const result = await this.goodsTypeService.getGoodsTypeWithoutParent();
+    let result = await this.goodsTypeService.getGoodsTypeWithoutParent();
 
     res.sendJson(result);
   }
@@ -42,9 +41,9 @@ export class GoodsTypeController {
   public async getChildTypeListAction(@PathParam('_id') _id: string, @Res() res: Express.Response) {
     _id = Mongodb.ObjectID(_id);
 
-    const result = await this.goodsTypeService.getGoodsTypeWithParent(_id);
+    let result = await this.goodsTypeService.getGoodsTypeWithParent(_id);
 
-    res.sendJson(type);
+    res.sendJson(result);
   }
 
 

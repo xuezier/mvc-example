@@ -1,6 +1,4 @@
-import {Middleware} from '../../server/lib/meta/decorator/Middleware';
-import {IMiddleware} from '../../server/lib/meta/interface/IMiddleware';
-import {Res, Next} from '../../server/lib/meta/decorator/Params';
+import {Middleware, IMiddleware, Res, Next} from 'mvc-ts';
 import * as Express from 'express';
 
 @Middleware({order: 1})

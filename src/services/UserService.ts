@@ -47,6 +47,7 @@ export class UserService {
     // console.log(user);
     const insertResult = await this.user.getCollection().insertOne(user);
     user._id = insertResult.insertedId;
+    delete user.password;
     return user;
   }
 

@@ -23,6 +23,6 @@ export class GoodsType {
   status: string;
   create_at: Date;
 
-  public schema(schema?: any) {}
+  public schema(schema?: any): any {}
   public getCollection(): Mongodb.Collection {}
 }

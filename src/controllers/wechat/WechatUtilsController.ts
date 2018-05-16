@@ -36,7 +36,7 @@ export class WechatUtilsController {
     const token = await this.wechat.getAccessTokenByCode(code);
     const existsUser: User = await this.userService.findUserByOpenid(token.openid);
 
-    let statedata: {redirect_url: string} = {};
+    let statedata: {redirect_url?: string} = {};
 
     let stateArray = state.split('|');
 

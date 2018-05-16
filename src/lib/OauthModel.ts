@@ -140,9 +140,9 @@ export class OauthModel {
    */
   public async getClient(clientId: string, clientSecret: string) {
     const db = MongoContainer.getDB();
-    const client: OauthClient = await db.oauth.clients.findOne({client_id: clientId});
+    const client: OauthClient = await db.oauth.clients.findOne({clientId});
     if (!client) return null;
-    if (client.client_secret && (clientSecret !== client.client_secret)) {
+    if (client.clientSecret && (clientSecret !== client.clientSecret)) {
       throw new Error('invalid_clientSecret');
     }
 

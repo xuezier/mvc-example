@@ -1,4 +1,4 @@
-import {ApplicationLoader, ApplicationSettings} from '../server';
+import {ApplicationLoader, ApplicationSettings} from 'mvc-ts';
 
 import {Collection} from 'mvc-ts';
 

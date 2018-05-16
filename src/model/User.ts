@@ -36,7 +36,7 @@ export const UserSchema = new SchemaObject({
   wechat: new SchemaObject({
     openid: String
   }),
-  create_at: Date,
+  create_at: {type: Date, default: (): Date => new Date},
   last_login: new SchemaObject({
     type: String,
     time: Date,

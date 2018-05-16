@@ -5,9 +5,8 @@ import {Collection, Model} from 'mvc-ts';
 @Model()
 export class OauthClient {
   _id: Mongodb.ObjectID;
-  client_id: string;
-  client_secret: string;
-  redirect_uri: string[];
+  clientId: string;
+  clientSecret: string;
 
   redirectUris: string[];
 
