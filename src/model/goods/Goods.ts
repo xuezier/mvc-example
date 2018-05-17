@@ -6,6 +6,7 @@ import {Model, Collection} from 'mvc-ts';
 import {ModelSchema} from '../../decorator/ModelSchema';
 
 export const GoodsSchema = new SchemaObject({
+  id: String,
   name: {type: String, required: true},
   creator: {type: Object},
   type: {type: Object, preserveNull: true},
@@ -23,6 +24,7 @@ export const GoodsSchema = new SchemaObject({
 @ModelSchema(GoodsSchema)
 export class GoodsModel {
   _id: Mongodb.ObjectID;
+  id: string;
   name: string;
   type: Mongodb.ObjectID;
   tags: Mongodb.ObjectID[];

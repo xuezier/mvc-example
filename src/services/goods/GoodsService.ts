@@ -3,6 +3,7 @@ import * as Mongodb from 'mongodb';
 import {Service, Inject} from 'mvc-ts';
 import { GoodsModel } from '../../model';
 import { GoodsStockService } from './GoodsStockService';
+import { CounterService } from '..';
 
 @Service()
 export class GoodsService {
@@ -11,6 +12,9 @@ export class GoodsService {
 
   @Inject()
   private stockService: GoodsStockService;
+
+  @Inject()
+  private counterService: CounterService;
 
   /**
    * find goods by goods _id
@@ -63,8 +67,12 @@ export class GoodsService {
    */
   public async createGoods(goods: GoodsModel): Promise<GoodsModel> {
     let insertValue: GoodsModel = this.goods.schema(goods);
+
     let stock = await this.stockService.generateStock();
+    let id = await this.counterService.getNextGoodsId();
+
     insertValue.stock = stock._id;
+    insertValue.id = id;
 
     let result = await this.goods.getCollection().insertOne(insertValue);
     insertValue._id = result.insertedId;

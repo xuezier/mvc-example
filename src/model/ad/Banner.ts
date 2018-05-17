@@ -9,7 +9,7 @@ import { ModelSchema } from '../../decorator/ModelSchema';
 export const BannerSchema = new SchemaObject({
   description: String,
   image: {type: Object, required: true},
-  link: string,
+  link: String,
   create_at: {type: Date, default: (): Date => new Date}
 });
 

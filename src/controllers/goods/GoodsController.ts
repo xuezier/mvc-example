@@ -21,7 +21,7 @@ export class GoodsController {
   @Get('/')
   public async getListAction(@QueryParam('type') type: string, @QueryParam('last') last: string, @Res() res: Express.Response) {
     let _id = last ? Mongodb.ObjectID(last) : null;
-    let list: GoodsModel[] = []
+    let list: GoodsModel[] = [];
 
     if (type) {
       type = Mongodb.ObjectID(type);
@@ -37,8 +37,6 @@ export class GoodsController {
       last: nextLast
     });
   }
-
-  @Get()
 
   @Put('/:goodsId')
   public async modifyAction(@PathParam('goodsId') goodsId: string, @Req() req: Express.Request, @Res() res: Express.Response) {
