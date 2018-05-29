@@ -38,7 +38,7 @@ export class GoodsController {
     });
   }
 
-  @Put('/:goodsId')
+  @Put('/update/:goodsId')
   public async modifyAction(@PathParam('goodsId') goodsId: string, @Req() req: Express.Request, @Res() res: Express.Response) {
     let _id = Mongodb.ObjectID(goodsId);
     let modifyValue = req.body;

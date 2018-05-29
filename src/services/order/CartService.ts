@@ -18,7 +18,7 @@ export class CartService {
   public async getCart(owner: Mongodb.ObjectID): Promise<Cart> {
     let cart: Cart = await this.cart.getCollection().findOne({ owner });
     if (!cart) {
-      cart = this.cart.schema({owner});
+      cart = this.cart.schema({ owner });
       let result = await this.cart.getCollection().insertOne(cart);
       cart._id = result.insertedId;
     }
@@ -37,7 +37,7 @@ export class CartService {
     let cart = await this.getCart(owner);
     let products = cart.products;
 
-    var exists = products.find(it => it.goods.equals(item.goods));
+    let exists = products.find(it => it.goods.equals(item.goods));
     if (exists) {
       exists.nums = item.nums;
     } else {
@@ -45,12 +45,12 @@ export class CartService {
       products.push(item);
     }
 
-    let result = await this.cart.getCollection().findOneAndUpdate({owner}, {
-      $set: {products}
+    let result = await this.cart.getCollection().findOneAndUpdate({ owner }, {
+      $set: { products }
     }, {
-      upsert: false,
-      returnOriginal: false
-    });
+        upsert: false,
+        returnOriginal: false
+      });
 
     return result.value;
   }
@@ -64,14 +64,34 @@ export class CartService {
    * @memberof CartService
    */
   public async removeCart(owner: Mongodb.ObjectID, goods: Mongodb.ObjectID): Promise<Cart> {
-    let result = await this.cart.getCollection().findOneAndUpdate({owner}, {
+    let result = await this.cart.getCollection().findOneAndUpdate({ owner }, {
       $pull: {
-        products: {goods}
+        products: { goods }
       }
     }, {
-      upsert: false,
-      returnOriginal: false
-    });
+        upsert: false,
+        returnOriginal: false
+      });
+
+    return result.value;
+  }
+
+  /**
+   * clear user cart
+   *
+   * @param {Mongodb.ObjectID} owner
+   * @returns {Promise<Cart>}
+   * @memberof CartService
+   */
+  public async clearCart(owner: Mongodb.ObjectID): Promise<Cart> {
+    let result = await this.cart.getCollection().findOneAndUpdate({ owner }, {
+      $set: {
+        products: []
+      }
+    }, {
+        upsert: false,
+        returnOriginal: false
+      });
 
     return result.value;
   }

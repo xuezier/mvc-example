@@ -23,7 +23,7 @@ export class CartController {
     let user: User = req.user;
     goods = Mongodb.ObjectID(goods);
 
-    let result = await this.cartService.addCart(user._id, {goods, nums});
+    let result = await this.cartService.addCart(user._id, { goods, nums });
 
     res.sendJson(result);
   }
@@ -36,5 +36,13 @@ export class CartController {
     let result = await this.cartService.removeCart(user._id, goods);
 
     res.sendJson(result);
+  }
+
+  @Put('/clear')
+  public async clearAction(@Req() req: Express.Request, @Res() res: Express.Response) {
+    let user: User = req.user;
+    let cart = await this.cartService.clearCart(user._id);
+
+    res.sendJson(cart);
   }
 }

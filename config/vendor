@@ -1,0 +1,22 @@
+{
+  "yunpian": {
+    "apikey": ""
+  },
+  "bmob": {
+    "ApplicationID": "",
+    "RestApiKey": ""
+  },
+  "qiniu": {
+    "ACCESS_KEY" : "",
+    "SECRET_KEY" : "",
+    "BUCKET" : "",
+    "SERVER_URL" : "",
+    "TOKEN_EXPIRE" : 1800
+  },
+  "wechat": {
+    "appid": "",
+    "appsecret": "",
+    "token": "",
+    "server": ""
+  }
+}

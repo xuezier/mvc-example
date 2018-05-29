@@ -61,8 +61,8 @@ export class Order {
     method: PAY_METHOD;
     payment: PAYMENT,
     total_amount: number;
-    coupon: number;
-    discount: number;
+    coupon?: number;
+    discount?: number;
     pay_amount: number; // pay_amount = total_amount - coupon - discount
   };
   status: ORDER_STATUS;
