@@ -7,3 +7,4 @@ export * from './CounterService';
 export * from './goods';
 export * from './ad';
 export * from './order';
+export * from './manage';

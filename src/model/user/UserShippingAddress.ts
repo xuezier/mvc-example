@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 
 import {Model, Collection} from 'mvc-ts';
 import { DefinedError } from './DefinedError';
-import { ModelSchema } from '../decorator/ModelSchema';
+import { ModelSchema } from '../../decorator/ModelSchema';
 
 export const UserShippingAddressSchema = new SchemaObject({
   receiver: {type: String, minLength: 1, required: true},

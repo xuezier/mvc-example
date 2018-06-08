@@ -1,7 +1,7 @@
 import * as Mongodb from 'mongodb';
 import * as SchemaObject from 'schema-object';
 
-import {Collection, Model} from 'mvc-ts';
+import { Collection, Model } from 'mvc-ts';
 import { ModelSchema } from '../../decorator/ModelSchema';
 
 export enum PAY_METHOD {
@@ -16,24 +16,25 @@ export enum PAYMENT {
 
 export enum ORDER_STATUS {
   SUBMIT = 'SUBMIT',
+  PAID = 'PAID',
   DELIVERY = 'DELIVERY',
   SHIPPING = 'SHIPPING',
   COMPLETE = 'COMPLETE'
 }
 
 export const OrderSchema = new SchemaObject({
-  products: [{goods: Object, nums: Number}],
+  products: [{ goods: Object, nums: Number }],
   owner: Object,
   payer: Object,
   amount: new SchemaObject({
-    method: {type: String, enum: [PAY_METHOD.ONLINE, PAY_METHOD.COD]},
-    payment: {type: String, enum: [PAYMENT.ALIPAY, PAYMENT.WECHATPAY]},
+    method: { type: String, enum: [PAY_METHOD.ONLINE, PAY_METHOD.COD] },
+    payment: { type: String, enum: [PAYMENT.ALIPAY, PAYMENT.WECHATPAY] },
     total_amount: Number,
     coupon: Number,
     discount: Number,
     pay_amount: Number,
   }),
-  status: {type: String, enum: [ORDER_STATUS.SUBMIT, ORDER_STATUS.DELIVERY, ORDER_STATUS.SHIPPING, ORDER_STATUS.COMPLETE]},
+  status: { type: String, enum: [ORDER_STATUS.SUBMIT, ORDER_STATUS.DELIVERY, ORDER_STATUS.SHIPPING, ORDER_STATUS.COMPLETE] },
   express: new SchemaObject({
     address: Object,
     company: String,

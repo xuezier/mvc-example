@@ -42,7 +42,8 @@ export class FileUploaderController {
 
     const file: File = await this.fileService.getFileById(_id);
     const link = this.fileService.generateFileLink(file.cdn.key);
-    res.redirect(301, link);
+    console.log(link)
+    res.sendJson({link});
   }
 
   @Get('/download/:_id')

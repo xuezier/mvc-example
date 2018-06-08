@@ -18,6 +18,7 @@
     "cli-table": "^0.3.1",
     "connect-multiparty": "^2.1.0",
     "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
     "cuid": "^2.1.1",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
@@ -44,6 +45,7 @@
   },
   "devDependencies": {
     "@types/node": "^6.0.110",
+    "commander": "^2.15.1",
     "typescript": "^2.8.3"
   },
   "_moduleAliases": {

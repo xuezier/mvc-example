@@ -6,15 +6,26 @@ param|name|type|des
 key|name|String|goods name
 key|type|String|goods type
 key|tags|String[]|goods tags
-key|description|goods description
+key|price|Number|goods price
+key|description|String|goods description
 key|thumb_images|String[]|goods thumb images
 key|combination|String[]|goods combinations
+
+## get goods counter
+Get /api/goods/counter
+
+## get goods counter by type
+Get /api/goods/counter/type/:type
+param|name|type|des
+-----|----|----|---
+param|type|String|goods type _id
 
 ## get goods list
 Get /api/goods
 param|name|type|des
 -----|----|----|---
 query|last|String|last goods _id
+query|page|Number|optional, list page, if page is having, last will not effect
 
 ## modify goods
 Put /api/goods/update/:goodsId

@@ -2,7 +2,7 @@ import * as Mongodb from 'mongodb';
 
 import {Service, MongoContainer, Inject} from 'mvc-ts';
 
-import {User} from '../model/User';
+import {User} from '../model'
 
 import * as Util from '../utils/util';
 

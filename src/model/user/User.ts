@@ -2,7 +2,7 @@ import * as Mongodb from 'mongodb';
 import * as SchemaObject from 'schema-object';
 
 import {Collection, Model} from 'mvc-ts';
-import { ModelSchema } from '../decorator/ModelSchema';
+import { ModelSchema } from '../../decorator/ModelSchema';
 
 export enum Sex {
   F='F',

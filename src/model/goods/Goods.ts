@@ -11,7 +11,7 @@ export const GoodsSchema = new SchemaObject({
   creator: { type: Object },
   type: { type: Object, preserveNull: true },
   tags: { type: Array, default: [] },
-  description: { type: Object, preserveNull: true },
+  description: { type: String, preserveNull: true },
   thumb_images: { type: Array, default: [] },
   combination: { type: Array, default: [] },
   stock: { type: Object },
@@ -30,7 +30,7 @@ export class GoodsModel {
   name: string;
   type: Mongodb.ObjectID;
   tags: Mongodb.ObjectID[];
-  description: Mongodb.ObjectID;
+  description: string;
   thumb_images: Mongodb.ObjectID[];
   combination: Mongodb.ObjectID[];
   stock: Mongodb.ObjectID;
