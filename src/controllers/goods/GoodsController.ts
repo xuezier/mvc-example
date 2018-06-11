@@ -3,7 +3,7 @@ import * as Mongodb from 'mongodb';
 
 import { RestController, Req, QueryParam, Res, Post, Get, Put, Delete, Inject, PathParam } from 'mvc-ts';
 import { GoodsService } from '../../services';
-import { GoodsModel } from '../../model';
+import { GoodsModel, User } from '../../model';
 
 @RestController('/api/goods')
 export class GoodsController {
@@ -12,8 +12,10 @@ export class GoodsController {
 
   @Post('/')
   public async createAction(@Req() req: Express.Request, @Res() res: Express.Response) {
-    let body = req.body;
-    console.log(body)
+    let body: GoodsModel = req.body;
+    let user: User = req.user;
+
+    body.creator = user._id;
     let goods = await this.goodsService.createGoods(body);
 
     res.sendJson(goods);

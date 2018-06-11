@@ -27,6 +27,7 @@ export const GoodsSchema = new SchemaObject({
 export class GoodsModel {
   _id: Mongodb.ObjectID;
   id: string;
+  creator: Mongodb.ObjectID;
   name: string;
   type: Mongodb.ObjectID;
   tags: Mongodb.ObjectID[];
