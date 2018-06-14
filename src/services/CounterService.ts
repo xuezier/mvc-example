@@ -20,6 +20,23 @@ export class CounterService {
     return result.value.sequence_value;
   }
 
+  public async getNextStoreId(): Promise<string> {
+    let id = await this.getNextSequenceValue('store');
+    if (id > 100000) {
+      return 'store' + id;
+    } else if (id > 10000) {
+      return 'store0' + id;
+    } else if (id > 1000) {
+      return 'store00' + id;
+    } else if (id > 100) {
+      return 'store000' + id;
+    } else if (id > 10) {
+      return 'store0000' + id;
+    } else if (id >= 1) {
+      return 'store00000' + id;
+    }
+  }
+
   public async getNextGoodsId(): Promise<string> {
     let id = await this.getNextSequenceValue('goods');
     if (id > 100000) {

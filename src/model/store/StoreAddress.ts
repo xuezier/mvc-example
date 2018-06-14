@@ -9,7 +9,7 @@ export const StoreAddressSchema = new SchemaObject({
     longitude: Number,
     latitude: Number,
     state: { type: String, required: true },
-    provice: { type: String, required: true },
+    province: { type: String, required: true },
     city: { type: String, required: true },
     county: { type: String, required: true },
     town: { type: String, required: true },
@@ -20,6 +20,7 @@ export const StoreAddressSchema = new SchemaObject({
   telephone: String,
   email: String,
   contact: String,
+  update_at: { type: Date, default: (): Date => new Date() },
   create_at: { type: Date, default: (): Date => new Date() }
 });
 

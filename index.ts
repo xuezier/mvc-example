@@ -10,11 +10,11 @@ dotenv.config();
 
 import * as OauthServer from 'oauth2-server';
 
-import {Application} from './src/Application';
+import { Application } from './src/Application';
 
-import {OauthModel} from './src/lib/OauthModel';
+import { OauthModel } from './src/lib/OauthModel';
 
-if(Cluster.isMaster) {
+if (Cluster.isMaster) {
   var cpuCount = OS.cpus().length;
 
   for (var i = 0; i < cpuCount; i += 1) {

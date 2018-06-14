@@ -10,7 +10,8 @@ export enum ManagerLevel {
 }
 
 export const ManagerSchame = new SchemaObject({
-  user: Object,
+  user: { type: Object, required: true },
+  store: { type: Object, required: true },
   create_at: { type: Date, default: () => new Date },
   level: { type: String, default: ManagerLevel.shopowner }
 });
@@ -21,6 +22,7 @@ export const ManagerSchame = new SchemaObject({
 export class Manager {
   _id: Mongodb.ObjectID;
   user: Mongodb.ObjectID;
+  store: Mongodb.ObjectID;
   create_at: Date;
   level: ManagerLevel;
 }
@@ -43,6 +45,8 @@ export const ManagerBindCodeSchame = new SchemaObject({
 export class ManagerBindCode {
   _id: Mongodb.ObjectID;
   user: Mongodb.ObjectID;
+  store: Mongodb.ObjectID;
+  level?: ManagerLevel;
   code: string;
   status: ManagerBindCodeStatus;
   create_at: Date;

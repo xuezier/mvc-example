@@ -1,7 +1,7 @@
 import * as Mongodb from 'mongodb';
 
 import { Service, Inject } from 'mvc-ts';
-import { Manager, ManagerBindCode, ManagerBindCodeStatus } from '../../model';
+import { Manager, ManagerBindCode, ManagerBindCodeStatus, ManagerLevel } from '../../model';
 import { DefinedError } from '../../model/DefinedError';
 
 @Service()
@@ -25,14 +25,30 @@ export class ManagerService {
   }
 
   /**
-   * @description create a bew manager
+   * @description create a new store manager
+   * @author Xuezi
+   * @param {Mongodb.ObjectID} user
+   * @param {Mongodb.ObjectID} store
+   * @returns {Promise<Manager>}
+   * @memberof ManagerService
+   */
+  public async createManager(user: Mongodb.ObjectID, store: Mongodb.ObjectID): Promise<Manager> {
+    let manager: Manager = this.manager.schema({ user, store });
+
+    let result = await this.manager.getCollection().insertOne(manager);
+    manager._id = result.insertedId;
+    return manager;
+  }
+
+  /**
+   * @description create a bew manager by bind code
    * @author Xuezi
    * @param {Mongodb.ObjectID} user
    * @returns {Promise<Manager>}
    * @memberof ManagerService
    */
   public async bindManager(user: Mongodb.ObjectID, code: string): Promise<Manager> {
-    let bindCode: ManagerBindCode = await this.managerBindCode.getCollection().findOne({code});
+    let bindCode: ManagerBindCode = await this.managerBindCode.getCollection().findOne({ code });
     if (!bindCode) {
       throw new DefinedError(400, 'code_not_exists');
     }
@@ -44,7 +60,11 @@ export class ManagerService {
       throw new DefinedError(400, 'code_used');
     }
 
-    let manager: Manager = this.manager.schema({ user });
+    let manager: Manager = this.manager.schema({
+      user,
+      store: bindCode.store,
+      level: bindCode.level || ManagerLevel.salesman
+    });
     let result = await this.manager.getCollection().insertOne(manager);
     manager._id = result.insertedId;
 

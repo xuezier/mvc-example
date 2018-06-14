@@ -9,9 +9,10 @@ import * as Mongodb from 'mongodb';
 import { Service, Inject } from 'mvc-ts';
 import * as _ from 'lodash';
 
-import { Store, URL_TYPE, StoreAddress } from '../../model';
+import { Store, URL_TYPE, StoreAddress, Manager, User } from '../../model';
 import { StoreAddressService } from './StoreAddressService';
 import { DefinedError } from '../../model/DefinedError';
+import { ManagerService, CounterService } from '..';
 
 @Service()
 export class StoreService {
@@ -20,6 +21,12 @@ export class StoreService {
 
   @Inject()
   private storeAddressService: StoreAddressService;
+
+  @Inject()
+  private managerService: ManagerService;
+
+  @Inject()
+  private counterService: CounterService;
 
 
   private async _modifyStore(_id: Mongodb.ObjectID, info: any): Promise<Store> {
@@ -59,16 +66,35 @@ export class StoreService {
     url_type: URL_TYPE,
     description?: string,
     address?: Mongodb.ObjectID,
-  }): Promise<Store> {
-    let store: Store = this.store.schema(info);
-
-    let { owner } = store;
-    let exists = await this.getStoreByOwner(owner);
+  }, user: User): Promise<Store> {
+    let exists = await this.getStoreByOwner(user._id);
     if (exists)
       throw new DefinedError(400, 'store_exists', 'user already has a store');
 
+    info.owner = user._id;
+    let store: Store = this.store.schema(info);
+
+    if (store.url_type === URL_TYPE.SYSTEM)
+      store.url = await this.counterService.getNextStoreId();
+
+    let address = await this.storeAddressService.createAddress({
+      mobile: user.mobile,
+      email: user.email,
+      address: {
+        state: '',
+        province: '',
+        city: '',
+        county: '',
+        town: '',
+        street: ''
+      }
+    });
+    store.address = address._id;
+
     let result = await this.store.getCollection().insertOne(store);
     store._id = result.insertedId;
+
+    let manager: Manager = await this.managerService.createManager(user._id, store._id);
 
     return store;
   }

@@ -23,9 +23,8 @@ export class StoreController {
   public async createAction(@Req() req: Express.Request, @Res() res: Express.Response) {
     let body: Store = req.body;
     let user: User = req.user;
-    body.owner = user._id;
 
-    let store = await this.storeService.createStore(body);
+    let store = await this.storeService.createStore(body, user);
 
     res.sendJson(store);
   }
@@ -41,5 +40,14 @@ export class StoreController {
     let result = await this.storeService.setAddress(address, store);
 
     res.sendJson(result);
+  }
+
+  @Get('/')
+  public async getInfoAction(@Req() req: Express.Request, @Res() res: Express.Response) {
+    let user: User = req.user;
+
+    let store = await this.storeService.getStoreByOwner(user._id);
+
+    res.sendJson(store);
   }
 }
