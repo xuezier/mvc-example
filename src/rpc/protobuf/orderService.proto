@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.service.goods";
+option objc_class_prefix ="RTG";
+
+package order;
+
+service Order {
+  rpc create(stream CreateMessage) returns (stream OrderMessage) {};
+  rpc getList(stream getParam) returns (stream OrderMessage) {};
+}
+
+message CreateMessage {
+  repeated ProductMessage products = 1;
+  string owner = 2;
+  string payer = 3;
+  int32 amount =4;
+  string remark =5;
+}
+
+message getParam {
+  int32 page = 1;
+  int32 pagesize = 2;
+}
+
+message OrderMessage {
+  repeated ProductMessage products = 1;
+}
+
+message ProductMessage {
+  string name = 1;
+  int32 price = 2;
+  string product_id = 3;
+}

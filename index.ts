@@ -14,37 +14,45 @@ import { Application } from './src/Application';
 
 import { OauthModel } from './src/lib/OauthModel';
 
-if (Cluster.isMaster) {
-  var cpuCount = OS.cpus().length;
+import { Settings } from './src/lib/grpc/decorator/Settings';
+import { ConfigContainer } from 'mvc-ts';
+import { RpcRegistry } from './src/lib/grpc';
 
-  for (var i = 0; i < cpuCount; i += 1) {
-    Cluster.fork();
-  }
+// if (Cluster.isMaster) {
+//   var cpuCount = OS.cpus().length;
 
-  Cluster.on('exit', function (worker) {
-    // Replace the dead worker,
-    // we're not sentimental
-    console.log('Worker %d died :(', worker.id);
-    Cluster.fork();
+//   for (var i = 0; i < cpuCount; i += 1) {
+//     Cluster.fork();
+//   }
 
-  });
-} else {
-  const application = new Application();
+//   Cluster.on('exit', function (worker) {
+//     // Replace the dead worker,
+//     // we're not sentimental
+//     console.log('Worker %d died :(', worker.id);
+//     Cluster.fork();
 
-  application.server.use(Express.static('public'));
-  application.server.set('views', 'public');
-  application.server.set('view engine', 'pug');
+//   });
+// } else {
+const application = new Application();
 
-  application.install('oauth', new OauthServer({
-    model: new OauthModel(),
-    debug: true,
-    accessTokenLifetime: 1800,
-    refreshTokenLifetime: 3600 * 24 * 15,
-  }));
+application.server.use(Express.static('public'));
+application.server.set('views', 'public');
+application.server.set('view engine', 'pug');
 
-  application.start();
+application.install('oauth', new OauthServer({
+  model: new OauthModel(),
+  debug: true,
+  accessTokenLifetime: 1800,
+  refreshTokenLifetime: 3600 * 24 * 15,
+}));
 
-}
+application.start();
+
+// }
+
+@Settings(ConfigContainer.get('utils.rpc'))
+class RPC extends RpcRegistry { }
+RPC.start();
 
 process.on('uncaughtException', (err: Error) => {
   console.error('Caught exception: ' + err.stack);

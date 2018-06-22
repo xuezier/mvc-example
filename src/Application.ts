@@ -1,4 +1,4 @@
-import { ApplicationLoader, ApplicationSettings, Inject } from 'mvc-ts';
+import { ApplicationLoader, ApplicationSettings, Inject, ConfigContainer } from 'mvc-ts';
 
 import { Collection } from 'mvc-ts';
 
@@ -7,5 +7,8 @@ import './controllers';
 
 import './model';
 
+import './rpc';
+
 @ApplicationSettings({ rootDir: `${__dirname}/../` })
 export class Application extends ApplicationLoader { }
+
