@@ -5,12 +5,12 @@ class OrderService {
   name = 123;
 
   @Route
-  public async create(call) {
+  public async create(CreateMessage) {
 
   }
 
   @Route
-  public async getList(call) {
+  public async getList(getParam: { page: number, pagesize: numbner }) {
 
   }
 }

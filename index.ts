@@ -15,8 +15,11 @@ import { Application } from './src/Application';
 import { OauthModel } from './src/lib/OauthModel';
 
 import { Settings } from './src/lib/grpc/decorator/Settings';
-import { ConfigContainer } from 'mvc-ts';
+import { ConfigContainer, Config } from 'mvc-ts';
 import { RpcRegistry } from './src/lib/grpc';
+
+import { CpApplication } from './src-cp/Application';
+import { RpcClientRegistry, Settings as ClientSettings } from './src-cp/lib/grpc';
 
 // if (Cluster.isMaster) {
 //   var cpuCount = OS.cpus().length;
@@ -48,11 +51,19 @@ application.install('oauth', new OauthServer({
 
 application.start();
 
+
 // }
 
 @Settings(ConfigContainer.get('utils.rpc'))
 class RPC extends RpcRegistry { }
 RPC.start();
+
+const cpApplication = new CpApplication();
+cpApplication.start(5566);
+
+@ClientSettings(ConfigContainer.get('utils.rpc'))
+class ClientRpc extends RpcClientRegistry { }
+ClientRpc.start();
 
 process.on('uncaughtException', (err: Error) => {
   console.error('Caught exception: ' + err.stack);

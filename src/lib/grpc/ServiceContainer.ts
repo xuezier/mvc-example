@@ -41,7 +41,7 @@ export class ServiceContainer {
     console.log(this.services, this.routes);
   }
 
-  static private _generateRouteFunc(route: Function) {
+  static private _generateRouteFunc(route: Function): Function {
     let func = function (call) {
       call.on('data', async function (data) {
         let result = await route(data);
