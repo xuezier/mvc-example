@@ -1,7 +1,7 @@
 import * as Mongodb from 'mongodb';
 
 import {Service, Inject} from 'mvc-ts';
-import { UserShippingAddress } from '../model/UserShippingAddress';
+import { UserShippingAddress } from '../model';
 import { DefinedError } from '../model/DefinedError';
 
 @Service()

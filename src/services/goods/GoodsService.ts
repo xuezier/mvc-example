@@ -1,6 +1,6 @@
 import * as Mongodb from 'mongodb';
 
-import {Service, Inject} from 'mvc-ts';
+import { Service, Inject } from 'mvc-ts';
 import { GoodsModel } from '../../model';
 import { GoodsStockService } from './GoodsStockService';
 import { CounterService } from '..';
@@ -23,15 +23,47 @@ export class GoodsService {
    * @returns {(Promise<GoodsModel|null>)}
    * @memberof GoodsService
    */
-  public async findGoodsById(_id: Mongodb.ObjectID): Promise<GoodsModel|null> {
-    return await this.goods.getCollection().findOne({_id});
+  public async findGoodsById(_id: Mongodb.ObjectID): Promise<GoodsModel | null> {
+    return await this.goods.getCollection().findOne({ _id });
   }
 
   private async _getList(query: any, limit: number): Promise<GoodsModel[]> {
     return await this.goods.getCollection().find(query)
-      .sort({_id: 1})
+      .sort({ _id: 1 })
       .limit(limit)
       .toArray();
+  }
+
+  private async _getListByPage(query: any, page: number, limit: number): Promise<GoodsModel[]> {
+    return await this.goods.getCollection().find(query)
+      .skip(page * limit)
+      .limit(limit)
+      .toArray();
+  }
+
+  /**
+   * @description get goods list by page
+   * @author Xuezi
+   * @param {number} [page=0]
+   * @param {number} [pagesize=10]
+   * @returns {Promise<GoodsModel[]>}
+   * @memberof GoodsService
+   */
+  public async getGoodsListByPage(page: number = 0, pagesize: number = 10): Promise<GoodsModel[]> {
+    return await this._getListByPage({}, page, pagesize);
+  }
+
+  /**
+   * @description
+   * @author Xuezi
+   * @param {Mongodb.ObjectID} type
+   * @param {number} [page=0]
+   * @param {number} [pagesize=10]
+   * @returns {Promise<GoodsModel[]>}
+   * @memberof GoodsService
+   */
+  public async getGoodsListByPageAndType(type: Mongodb.ObjectID, page: number = 0, pagesize: number = 10): Promise<GoodsModel[]> {
+    return await this._getListByPage({ type }, page, pagesize);
   }
 
   /**
@@ -41,17 +73,38 @@ export class GoodsService {
    * @returns {Promise<GoodsModel[]>}
    * @memberof GoodsService
    */
-  public async getGoodsListById(_id?: Mongodb.ObjectID, pagesize: number = 20): Promise<GoodsModel[]> {
-    let query = _id ? {_id: {$gt: _id}} : {};
+  public async getGoodsListById(_id?: Mongodb.ObjectID, pagesize: number = 10): Promise<GoodsModel[]> {
+    let query = _id ? { _id: { $gt: _id } } : {};
 
     let list: GoodsModel[] = await this._getList(query, pagesize);
     return list;
   }
 
-  public async getGoodsListByTypeAndId(type: Mongodb.ObjectID, _id?: Mongodb.ObjectID, pagesize: number = 20): Promise<GoodsModel[]> {
-    let query = {type};
+  /**
+   * @description get goods counter
+   * @author Xuezi
+   * @returns {Promise<number>}
+   * @memberof GoodsService
+   */
+  public async getGoodsCounter(): Promise<number> {
+    return await this.goods.getCollection().count({});
+  }
+
+  /**
+   * @description get goods counter by goods type
+   * @author Xuezi
+   * @param {Mongodb.ObjectID} type
+   * @returns {Promise<number>}
+   * @memberof GoodsService
+   */
+  public async getGoodsCounterByType(type: Mongodb.ObjectID): Promise<number> {
+    return await this.goods.getCollection().count({ type });
+  }
+
+  public async getGoodsListByTypeAndId(type: Mongodb.ObjectID, _id?: Mongodb.ObjectID, pagesize?: number = 10): Promise<GoodsModel[]> {
+    let query = { type };
     if (_id) {
-      query['_id'] = {$gt: _id};
+      query['_id'] = { $gt: _id };
     }
 
     let list = await this._getList(query, pagesize);
@@ -66,6 +119,10 @@ export class GoodsService {
    * @memberof GoodsService
    */
   public async createGoods(goods: GoodsModel): Promise<GoodsModel> {
+    let { thumb_images = [] } = goods;
+    thumb_images = thumb_images.map(image => Mongodb.ObjectID(image));
+    goods.thumb_images = thumb_images;
+
     let insertValue: GoodsModel = this.goods.schema(goods);
 
     let stock = await this.stockService.generateStock();
@@ -81,7 +138,7 @@ export class GoodsService {
   }
 
   private async _modifyGoods(_id: Mongodb.ObjectID, goods: GoodsModel): Promise<GoodsModel> {
-    let result = await this.goods.getCollection().findOneAndUpdate({_id}, {$set: goods}, {
+    let result = await this.goods.getCollection().findOneAndUpdate({ _id }, { $set: goods }, {
       upsert: false,
       returnOriginal: false
     });

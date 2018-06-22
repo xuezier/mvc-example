@@ -2,7 +2,7 @@ import * as Express from 'express';
 import * as Mongodb from 'mongodb';
 
 import {RestController, Post, Get, Put, Delete, Res, Req, BodyParam, PathParam, Inject} from 'mvc-ts';
-import { UserShippingAddress, UserShippingAddressSchema } from '../../model/UserShippingAddress';
+import { UserShippingAddress, UserShippingAddressSchema } from '../../model';
 import { User } from '../../model';
 import { UserShippingAddressService } from '../../services/UserShippingAddressService';
 import { DefinedError } from '../../model/DefinedError';

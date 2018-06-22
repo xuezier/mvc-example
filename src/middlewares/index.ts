@@ -3,3 +3,4 @@ export * from './SendJsonMiddleware';
 export * from './ErrMiddleware';
 export * from './OauthAuthenticateMiddleware';
 export * from './SmsCodeMiddleware';
+export * from './CorsMiddleware';

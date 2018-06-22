@@ -19,7 +19,30 @@ export class CartController {
   }
 
   @Put('/add')
-  public async addAction(@BodyParam('item') item: CartItem, @Res() res: Express.Response) {
+  public async addAction(@BodyParam('goods') goods: String, @BodyParam('nums') nums: Number, @BodyParam @Res() res: Express.Response) {
+    let user: User = req.user;
+    goods = Mongodb.ObjectID(goods);
 
+    let result = await this.cartService.addCart(user._id, { goods, nums });
+
+    res.sendJson(result);
+  }
+
+  @Put('/remove')
+  public async removeAction(@BodyParam('goods') goods: String, @Res() res: Express.Response) {
+    let user: User = req.user;
+    goods = Mongodb.ObjectID(goods);
+
+    let result = await this.cartService.removeCart(user._id, goods);
+
+    res.sendJson(result);
+  }
+
+  @Put('/clear')
+  public async clearAction(@Req() req: Express.Request, @Res() res: Express.Response) {
+    let user: User = req.user;
+    let cart = await this.cartService.clearCart(user._id);
+
+    res.sendJson(cart);
   }
 }

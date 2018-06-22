@@ -1,6 +1,6 @@
-import {MongoContainer, Inject, Model, Controller} from 'mvc-ts';
+import { MongoContainer, Inject, Model, Controller } from 'mvc-ts';
 
-import {User, OauthClient, OauthToken, OauthTokenStatus} from '../model';
+import { User, OauthClient, OauthToken, OauthTokenStatus } from '../model';
 
 import * as Util from '../utils/util';
 import { OauthAccessTokenRedisService } from '../services/RedisService';
@@ -9,7 +9,7 @@ import { OauthAuthorizationCode, OauthAuthorizationCodeStatus } from '../model/o
 @Controller()
 export class OauthModel {
   @Inject()
-  private redis = new OauthAccessTokenRedisService;
+  private redis: OauthAccessTokenRedisService;
 
   /**
    * Invoked to generate a new access token.
@@ -52,19 +52,19 @@ export class OauthModel {
   public async getAuthorizationCode(authorizationCode: string): Promise<OauthAuthorizationCode> {
     const db = MongoContainer.getDB();
 
-    let code: OauthAuthorizationCode = await db.oauth.authorization_code.findOne({authorizationCode: authorizationCode});
+    let code: OauthAuthorizationCode = await db.oauth.authorization_code.findOne({ authorizationCode: authorizationCode });
 
-    if((!code) || (code.status === OauthAuthorizationCodeStatus.expired)) {
+    if ((!code) || (code.status === OauthAuthorizationCodeStatus.expired)) {
       throw new Error('invalid_authorizationCode');
     }
 
-    if(code.expiresAt < new Date) {
+    if (code.expiresAt < new Date) {
       throw new Error('invalid_authorizationCode_expire');
     }
 
-    const user = await db.user.findOne({_id: code.user});
+    const user = await db.user.findOne({ _id: code.user });
     delete user.password;
-    const client = await db.oauth.clients.findOne({_id: code.client});
+    const client = await db.oauth.clients.findOne({ _id: code.client });
 
     code.user = user;
     code.client = client;
@@ -102,7 +102,7 @@ export class OauthModel {
   public async revokeAuthorizationCode(code: OauthAuthorizationCode): Promise<boolean> {
     const db = MongoContainer.getDB();
 
-    await db.oauth.authorization_code.findOneAndUpdate({_id: code._id}, {$set: {status: OauthAuthorizationCodeStatus.expired}});
+    await db.oauth.authorization_code.findOneAndUpdate({ _id: code._id }, { $set: { status: OauthAuthorizationCodeStatus.expired } });
 
     return true;
   }
@@ -114,9 +114,9 @@ export class OauthModel {
   public async getRefreshToken(refreshToken: string) {
     const db = MongoContainer.getDB();
 
-    const token: OauthToken = await db.oauth.tokens.findOne({refreshToken});
+    const token: OauthToken = await db.oauth.tokens.findOne({ refreshToken });
 
-    if ((!token) || (token.status === OauthTokenStatus.expired) ) {
+    if ((!token) || (token.status === OauthTokenStatus.expired)) {
       throw new Error('invalid_refreshToken');
     }
 
@@ -124,8 +124,8 @@ export class OauthModel {
       throw new Error('invalid_refreshToken_expire');
     }
 
-    const user = await db.user.findOne({_id: token.user});
-    const client = await db.oauth.clients.findOne({_id: token.client});
+    const user = await db.user.findOne({ _id: token.user });
+    const client = await db.oauth.clients.findOne({ _id: token.client });
 
     token.user = user;
     token.client = client;
@@ -140,7 +140,7 @@ export class OauthModel {
    */
   public async getClient(clientId: string, clientSecret: string) {
     const db = MongoContainer.getDB();
-    const client: OauthClient = await db.oauth.clients.findOne({clientId});
+    const client: OauthClient = await db.oauth.clients.findOne({ clientId });
     if (!client) return null;
     if (client.clientSecret && (clientSecret !== client.clientSecret)) {
       throw new Error('invalid_clientSecret');
@@ -226,7 +226,7 @@ export class OauthModel {
 
     const db = MongoContainer.getDB();
 
-    token = await db.oauth.tokens.findOne({accessToken});
+    token = await db.oauth.tokens.findOne({ accessToken });
 
     if ((!token) || (token.status === OauthTokenStatus.expired)) {
       throw new Error('invalid_accessToken');
@@ -236,7 +236,7 @@ export class OauthModel {
       throw new Error('invalid_accessToken_expire');
     }
 
-    user = await db.user.findOne({_id: token.user});
+    user = await db.user.findOne({ _id: token.user });
     delete user.password;
 
     await this.redis.setAccessToken(token);
@@ -260,7 +260,7 @@ export class OauthModel {
    */
   public async revokeToken(token: OauthToken) {
     const db = MongoContainer.getDB();
-    await db.oauth.tokens.findOneAndUpdate({_id: token._id}, {$set: {status: OauthTokenStatus.expired}});
+    await db.oauth.tokens.findOneAndUpdate({ _id: token._id }, { $set: { status: OauthTokenStatus.expired } });
     return true;
   }
 };
