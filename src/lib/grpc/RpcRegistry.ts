@@ -47,7 +47,8 @@ export class RpcRegistry {
   }
 
   static private _start() {
-    this.server.bind(`${this.host}:${this.port}`, this._credentials);
+    let address = `${this.host}:${this.port}`;
+    this.server.bind(address, this._credentials);
     this.server.start();
   }
 

@@ -56,7 +56,6 @@ export class RpcClientRegistry {
   static _registryRoute(clientContainer: { client: GRPC.Client, target: Function }) {
     let target = clientContainer.target;
     let routes = ClientContainer.getRoutes(target);
-
     for (let route of routes) {
       ClientContainer.generateRouteFunc(route);
     }

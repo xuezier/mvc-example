@@ -10,7 +10,13 @@ export class HelloController {
 
   @Get('/hello')
   public async indexAction(@Res() res: Express.Response) {
-    console.log(this.orderRpc.create());
-    res.send(200, 123);
+
+    let result = await this.orderRpc.create({
+      owner: '1',
+      payer: '2',
+      amount: 333,
+      remark: '4'
+    });
+    res.json(result);
   }
 }

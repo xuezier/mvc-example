@@ -37,8 +37,6 @@ export class ServiceContainer {
 
     let func = this._generateRouteFunc(route);
     this.routes.push({ target, route, func });
-
-    console.log(this.services, this.routes);
   }
 
   static private _generateRouteFunc(route: Function): Function {
@@ -46,6 +44,9 @@ export class ServiceContainer {
       call.on('data', async function (data) {
         let result = await route(data);
         if (result) call.write(result);
+      });
+      call.on('error', error => {
+        console.error(error);
       });
       call.on('end', function () {
         call.end();

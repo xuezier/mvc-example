@@ -61,9 +61,12 @@ RPC.start();
 const cpApplication = new CpApplication();
 cpApplication.start(5566);
 
-@ClientSettings(ConfigContainer.get('utils.rpc'))
-class ClientRpc extends RpcClientRegistry { }
-ClientRpc.start();
+setTimeout(() => {
+  @ClientSettings(ConfigContainer.get('utils.rpc'))
+  class ClientRpc extends RpcClientRegistry { }
+  ClientRpc.start();
+  // }, 20 * 1000);
+});
 
 process.on('uncaughtException', (err: Error) => {
   console.error('Caught exception: ' + err.stack);

@@ -31,15 +31,57 @@ export class ClientContainer {
   }
 
   static generateRouteFunc(route: { target: Function, property: Property, key: string }) {
-
+    let func = this._generateRouteFunc(route.property.value, route.target, route.key);
+    route.target.constructor.prototype[route.key] = func;
+    route.property.value = func;
   }
 
-  static private _generateRouteFunc(route: Function): Function {
+  static private _generateRouteFunc(route: Function, target: Function, key: string): Function {
+    let clientContainer = this.getClient(target.constructor);
 
+    let func = async function (): any {
+      let _func = clientContainer.client[key];
+      if (_func instanceof Function) {
+        let _routeFunc = route;
+        let _writeData = arguments[0] || {};
+
+        let call = _func.call(clientContainer.client);
+        return new Promise(async (resolve: Function, reject: Function) => {
+          let result: any;
+          let error: any;
+
+          call.on('data', async (chunk) => {
+            result = await _routeFunc(_writeData, chunk);
+            console.log(result)
+            if (!result) {
+              result = chunk;
+            }
+            call.end();
+          });
+
+          call.on('error', e => {
+            error = e;
+            call.end();
+          });
+
+          call.on('end', () => {
+            console.log(1212)
+            if (error) {
+              return reject(error);
+            }
+            resolve(result);
+          });
+
+          call.write(_writeData);
+        });
+      }
+    }
+
+    return func;
   }
 
   static getRoutes(target: Function): { target: Function, property: Property, key: string }[] {
-    let routes = this.routes.filter(route => route.target === target);
+    let routes = this.routes.filter(route => route.target.constructor === target);
     return routes;
   }
 
@@ -48,7 +90,7 @@ export class ClientContainer {
     return route;
   }
 
-  static getClient(target: Function): any[] {
+  static getClient(target: Function) {
     let client = this.clients.find(client => client.target === target);
     return client;
   }

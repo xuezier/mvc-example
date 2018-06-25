@@ -9,7 +9,6 @@ import { ServiceContainer } from '../ServiceContainer';
 
 export function Service(path: string) {
   return function (target: Function) {
-    console.log(target,22)
     ServiceContainer.registryService(target, path);
-  }
+  };
 }
