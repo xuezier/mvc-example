@@ -1,8 +1,12 @@
 openssl genrsa -passout pass:1111 -des3 -out ca.key 2048
 
 # openssl req -passin pass:1111 -new -x509 -days 365 -key ca.key -out ca.crt -subj  "/C=FR/ST=Paris/L=Paris/O=Test/OU=Test/CN=localhost"
-openssl req -passin pass:1111 -new -x509 -days 365 -key ca.key -out ca.crt -subj  "/C=FR/ST=Paris/L=Paris/O=Test/OU=Test/CN=ca"
+openssl req -passin pass:1111 -new -x509 -days 365 -key ca.key -out ca.crt -subj  "/C=FR/ST=Paris/L=Paris/O=Test/OU=Test/CN=localhost"
 
+
+############################################################################################
+##############  server side  ###############################################################
+############################################################################################
 openssl genrsa -passout pass:1111 -des3 -out server.key 2048
 
 # openssl req -passin pass:1111 -new -key server.key -out server.csr -subj  "/C=FR/ST=Paris/L=Paris/O=Test/OU=Test/CN=localhost"
@@ -12,6 +16,10 @@ openssl x509 -req -passin pass:1111 -days 365 -in server.csr -CA ca.crt -CAkey c
 
 openssl rsa -passin pass:1111 -in server.key -out server.key
 
+
+############################################################################################
+##############  client side  ###############################################################
+############################################################################################
 openssl genrsa -passout pass:1111 -des3 -out oriclient.key 2048
 
 # openssl req -passin pass:1111 -new -key client.key -out client.csr -subj  "/C=FR/ST=Paris/L=Paris/O=Test/OU=Test/CN=localhost"
