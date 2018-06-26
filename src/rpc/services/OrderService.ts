@@ -1,4 +1,4 @@
-import { Route, Service } from "../../lib/grpc";
+import { Route, Service } from "grpc-server-ts";
 
 @Service(__dirname + '/../protobuf/orderService.proto')
 class OrderService {
@@ -7,7 +7,7 @@ class OrderService {
   @Route
   public async create(CreateMessage) {
     console.log('heiheihei')
-    return [{ product_id: '123', name: '456', price: 5555 }];
+    return Array.from({ length: 10 }).fill({ product_id: '123', name: '456', price: 5555 });
   }
 
   @Route

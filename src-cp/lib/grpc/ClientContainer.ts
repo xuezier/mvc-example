@@ -38,7 +38,6 @@ export class ClientContainer {
 
   static private _generateRouteFunc(route: Function, target: Function, key: string): Function {
     let clientContainer = this.getClient(target.constructor);
-
     let func = async function (): any {
       let _func = clientContainer.client[key];
       if (_func instanceof Function) {
@@ -52,7 +51,6 @@ export class ClientContainer {
 
           call.on('data', async (chunk) => {
             result = await _routeFunc(_writeData, chunk);
-            console.log(result)
             if (!result) {
               result = chunk;
             }
@@ -65,7 +63,6 @@ export class ClientContainer {
           });
 
           call.on('end', () => {
-            console.log(1212)
             if (error) {
               return reject(error);
             }

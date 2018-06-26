@@ -5,7 +5,5 @@ import { Route, Client } from "../lib/grpc";
 @Client(__dirname + '/protobuf/orderService.proto')
 export class Order {
   @Route
-  public async create(data, result) {
-    console.log(456, data, result);
-  }
+  public async create(data, result) { }
 }

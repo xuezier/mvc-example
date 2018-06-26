@@ -14,9 +14,8 @@ import { Application } from './src/Application';
 
 import { OauthModel } from './src/lib/OauthModel';
 
-import { Settings } from './src/lib/grpc/decorator/Settings';
 import { ConfigContainer, Config } from 'mvc-ts';
-import { RpcRegistry } from './src/lib/grpc';
+import { RpcRegistry, Settings } from 'grpc-server-ts';
 
 import { CpApplication } from './src-cp/Application';
 import { RpcClientRegistry, Settings as ClientSettings } from './src-cp/lib/grpc';

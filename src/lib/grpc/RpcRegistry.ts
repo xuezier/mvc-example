@@ -74,7 +74,6 @@ export class RpcRegistry {
           rpc[key] = routeContainer.func;
         }
       }
-
       this.server.addService(serviceContainer.service, rpc);
     }
   }
