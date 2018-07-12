@@ -1,8 +1,8 @@
-import { Settings } from '../interface/Settings';
-import { SettingRegistry } from '../SettingRegistry';
+import {ISettings} from "../interface/ISettings";
+import {SettingsRestry} from "../SettingsRegistry";
 
-export function Settings(settings: Settings) {
-  return function (target: Function) {
-    SettingRegistry.registry(settings);
-  };
+export function Settings(settings: ISettings) {
+  return function () {
+    SettingsRestry.registry(settings);
+  }
 }

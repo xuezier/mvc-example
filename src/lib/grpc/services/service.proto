@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.service";
+option objc_class_prefix ="RTG";
+
+package MSG;
+
+service Message {
+  rpc route(stream Data) returns (stream Result) {};
+}
+
+message Data {
+  int32 id = 1;
+  string type = 2;
+  string data = 3;
+  string route = 4;
+}
+
+message Result {
+  int32 id = 1;
+  string type = 2;
+  string data = 3;
+  string route = 4;
+}

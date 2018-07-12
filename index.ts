@@ -14,11 +14,13 @@ import { Application } from './src/Application';
 
 import { OauthModel } from './src/lib/OauthModel';
 
+import {ClientRpcRegistry, Settings, ServiceRpcRegistry} from './src/lib/grpc';
+
 import { ConfigContainer, Config } from 'mvc-ts';
-import { RpcRegistry, Settings } from 'grpc-server-ts';
+// import { RpcRegistry, Settings } from 'grpc-server-ts';
 
 import { CpApplication } from './src-cp/Application';
-import { RpcClientRegistry, Settings as ClientSettings } from './src-cp/lib/grpc';
+// import { RpcClientRegistry, Settings as ClientSettings } from './src-cp/lib/grpc';
 
 // if (Cluster.isMaster) {
 //   var cpuCount = OS.cpus().length;
@@ -54,18 +56,20 @@ application.start();
 // }
 
 @Settings(ConfigContainer.get('utils.rpc'))
-class RPC extends RpcRegistry { }
-RPC.start();
+class s extends ServiceRpcRegistry { }
+s.start()
+// class RPC extends RpcRegistry { }
+// RPC.start();
 
 const cpApplication = new CpApplication();
 cpApplication.start(5566);
 
-setTimeout(() => {
-  @ClientSettings(ConfigContainer.get('utils.rpc'))
-  class ClientRpc extends RpcClientRegistry { }
-  ClientRpc.start();
-  // }, 20 * 1000);
-});
+@Settings(ConfigContainer.get('utils.rpc'))
+class c extends ClientRpcRegistry {}
+c.start();
+// @ClientSettings(ConfigContainer.get('utils.rpc'))
+// class ClientRpc extends RpcClientRegistry { }
+// ClientRpc.start();
 
 process.on('uncaughtException', (err: Error) => {
   console.error('Caught exception: ' + err.stack);

@@ -1,4 +1,4 @@
-export interface Settings {
+export interface ISettings {
   // grpc bind port
   port: string | number;
 
@@ -8,9 +8,13 @@ export interface Settings {
   // ca file path string
   ca?: string;
 
-  // cert file path string
   cert?: string;
 
-  // key file path string
   key?: string;
+
+  // cert file path string
+  client_cert?: string;
+
+  // key file path string
+  client_key?: string;
 }

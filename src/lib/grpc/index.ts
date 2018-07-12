@@ -1,2 +1,3 @@
 export * from './decorator';
-export * from './RpcRegistry';
+export * from './ClientRpcRegistry';
+export * from './ServiceRpcRegistry';
