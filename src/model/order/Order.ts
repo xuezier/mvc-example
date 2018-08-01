@@ -49,7 +49,7 @@ export const OrderSchema = new SchemaObject({
 
 @Collection('order')
 @Model()
-@ModelSchema()
+@ModelSchema(OrderSchema)
 export class Order {
   _id: Mongodb.ObjectID;
   products: {

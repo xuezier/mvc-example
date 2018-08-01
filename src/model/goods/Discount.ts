@@ -20,11 +20,13 @@ export enum DiscountStatus {
 @Collection('goods.discount')
 @Model()
 export class Discount {
-  _id: Mongodb.ObjectID;
-  type: DiscountType;
-  condition: DiscountCondition;
-  satisfied: number | string;
-  status: DiscountStatus;
-  start_at: Date;
-  end_at: Date;
+  _id?: Mongodb.ObjectID;
+  type?: DiscountType;
+  condition?: DiscountCondition;
+  satisfied?: number | string;
+  status?: DiscountStatus;
+  start_at?: Date;
+  end_at?: Date;
+
+  public getCollection?(): any {}
 }

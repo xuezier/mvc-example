@@ -19,6 +19,7 @@ export class OrderService {
     owner: Mongodb.ObjectID,
     address: Mongodb.ObjectID,
   }): Promise<Order> {
-
+    let a: any;
+    return a;
   }
 }

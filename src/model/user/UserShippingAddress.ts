@@ -3,7 +3,6 @@ import * as SchemaObject from 'schema-object';
 import * as _ from 'lodash';
 
 import {Model, Collection} from 'mvc-ts';
-import { DefinedError } from './DefinedError';
 import { ModelSchema } from '../../decorator/ModelSchema';
 
 export const UserShippingAddressSchema = new SchemaObject({

@@ -1,4 +1,6 @@
 # dir
+/app
+!/app/.gitkeep
 /app/src/
 /app/server/
 /config/*.json

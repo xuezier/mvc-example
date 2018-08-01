@@ -1,5 +1,6 @@
 import * as UUIDV4 from 'uuid/v4';
 import * as Mime from 'mime';
+import * as Mongodb from 'mongodb';
 
 import {Service, Inject} from 'mvc-ts';
 

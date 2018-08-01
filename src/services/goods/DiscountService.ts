@@ -47,14 +47,14 @@ export class DiscountService {
    * @memberof DiscountService
    */
   public async addDiscountToGoods(discount: Mongodb.ObjectID, goods: Mongodb.ObjectID): Promise<GoodsModel> {
-    let discount = await this.findDiscountById(discount);
+    let rDiscount = await this.findDiscountById(discount);
 
-    if (!discount) {
+    if (!rDiscount) {
       throw new DefinedError(400, 'not_fount_discount');
     }
 
     let result = await this.goods.getCollection().findOneAndUpdate({ _id: goods }, {
-      $set: { discount }
+      $set: { rDiscount }
     }, {
         upsert: false,
         returnOriginal: false

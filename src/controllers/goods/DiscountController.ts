@@ -12,6 +12,7 @@ import * as Express from 'express';
 import { RestController, Post, Get, Put, Req, Res, Inject, BodyParam, PathParam, Delete } from 'mvc-ts';
 import { DiscountService } from '../../services';
 import { DefinedError } from '../../model/DefinedError';
+import { DiscountType, DiscountCondition } from '../../model';
 
 @RestController('/api/goods/discount')
 export class DiscountController {
@@ -21,8 +22,8 @@ export class DiscountController {
   @Post('/')
   public async createAction(
     @Req() req: Express.Request,
-    @BodyParam('type') type: string,
-    @BodyParam('condition') condition: string,
+    @BodyParam('type') type: DiscountType,
+    @BodyParam('condition') condition: DiscountCondition,
     @BodyParam('satisfied') satisfied: number,
     @BodyParam('start_at') start_at: Date,
     @BodyParam('end_at') end_at: Date,

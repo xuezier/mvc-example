@@ -7,7 +7,7 @@ import { ModelSchema } from '../../decorator/ModelSchema';
 export class CartItem {
   goods: Mongodb.ObjectID;
   nums: Number;
-  add_at: Date;
+  add_at?: Date;
 }
 
 export const CartSchema = new SchemaObject({
@@ -22,4 +22,7 @@ export class Cart {
   _id: Mongodb.ObjectID;
   owner: Mongodb.ObjectID;
   products: CartItem[];
+
+  public getCollection?(): Mongodb.Collection {}
+  public schema?(schema: any): any {}
 }

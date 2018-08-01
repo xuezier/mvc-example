@@ -25,7 +25,7 @@ export class SmsCodeDaylyLimitMiddleware implements IMiddleware {
   private smsRedis: SmsRedisService;
 
   public async use(@BodyParam('mobile') mobile: string, @Next() next: Express.NextFunction) {
-    const limit = await this.smsRedis.getCodeRequestLimit();
+    const limit = await this.smsRedis.getCodeRequestLimit(mobile);
     if(limit > 10) throw new Error('limit_mobile_request');
 
     await this.smsRedis.incrCodeRequest(mobile);

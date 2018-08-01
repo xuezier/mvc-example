@@ -46,4 +46,7 @@ export class StoreAddress {
   email: string;
   contact: string;
   create_at: Date;
+
+  public getCollection?(): Mongodb.Collection {}
+  public schema?(schema: any): any {}
 }

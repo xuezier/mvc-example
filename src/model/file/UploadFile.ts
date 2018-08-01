@@ -1,4 +1,4 @@
-import {Model} from 'mvc-ts';
+import { Model } from 'mvc-ts';
 
 export class UploadFile {
   fieldName: string;
@@ -8,7 +8,17 @@ export class UploadFile {
     'content-disposition': string;
     'content-type': string;
   };
+
+  cdn: {
+    hash: string;
+    key: string;
+    persistenId: string;
+    server_url?: string;
+  };
+
   size: number;
   name: string;
   type: string;
+
+  extension: string;
 }

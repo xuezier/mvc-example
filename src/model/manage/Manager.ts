@@ -25,6 +25,9 @@ export class Manager {
   store: Mongodb.ObjectID;
   create_at: Date;
   level: ManagerLevel;
+
+  public getCollection?(): any {}
+  public schema?(schema: any): any {}
 }
 
 export enum ManagerBindCodeStatus {
@@ -43,11 +46,14 @@ export const ManagerBindCodeSchame = new SchemaObject({
 @Model()
 @ModelSchema(ManagerBindCodeSchame)
 export class ManagerBindCode {
-  _id: Mongodb.ObjectID;
-  user: Mongodb.ObjectID;
-  store: Mongodb.ObjectID;
+  _id?: Mongodb.ObjectID;
+  user?: Mongodb.ObjectID;
+  store?: Mongodb.ObjectID;
   level?: ManagerLevel;
-  code: string;
-  status: ManagerBindCodeStatus;
-  create_at: Date;
+  code?: string;
+  status?: ManagerBindCodeStatus;
+  create_at?: Date;
+
+  public getCollection?(): Mongodb.Collection {}
+  public schema?(schema: any): any {}
 }

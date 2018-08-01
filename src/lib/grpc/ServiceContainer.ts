@@ -5,6 +5,6 @@ export class ServiceContainer {
   static registryService(target: Function, key: string, property: Property) {}
 
   static getFuncByRoute(route: string): Function {
-
+    return (): any=>{}
   }
 }

@@ -7,5 +7,7 @@ import {Collection, Model} from 'mvc-ts';
 export class Counter {
   _id: Mongodb.ObjectID;
   name: string;
-  sequence_value: numner;
+  sequence_value: number;
+
+  public getCollection?(): any {}
 }

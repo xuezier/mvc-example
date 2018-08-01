@@ -124,8 +124,8 @@ export class StoreService {
       throw new DefinedError(400, 'address_in_used');
     }
 
-    let store = await this._modifyStore(store, { address: address_id });
+    let rStore = await this._modifyStore(store, { address: address_id });
 
-    return store;
+    return rStore;
   }
 }

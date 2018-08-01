@@ -34,4 +34,7 @@ export class Store {
   address: Mongodb.ObjectID;
   thumb_images: Mongodb.ObjectID[];
   create_at: Date;
+
+  public getCollection?(): Mongodb.Collection {}
+  public schema?(schema: any): any {}
 }

@@ -101,7 +101,11 @@ export class GoodsService {
     return await this.goods.getCollection().count({ type });
   }
 
-  public async getGoodsListByTypeAndId(type: Mongodb.ObjectID, _id?: Mongodb.ObjectID, pagesize?: number = 10): Promise<GoodsModel[]> {
+  public async getGoodsListByTypeAndId(type: Mongodb.ObjectID, _id?: Mongodb.ObjectID, pagesize?: number): Promise<GoodsModel[]> {
+    if (!pagesize) {
+      pagesize = 10;
+    }
+
     let query = { type };
     if (_id) {
       query['_id'] = { $gt: _id };

@@ -3,7 +3,9 @@ export interface IResult {
 
   type?: string;
 
-  data: string;
+  result?: any;
+
+  data?: string;
 
   route?: string;
 }

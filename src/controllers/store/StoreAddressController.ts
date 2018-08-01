@@ -3,7 +3,7 @@ import * as Mongodb from 'mongodb';
 
 import { RestController, Post, Get, Put, Req, Res, BodyParam, Inject, PathParam } from 'mvc-ts';
 import { StoreAddressService, StoreService } from '../../services';
-import { User } from '../../model';
+import { User, StoreAddress } from '../../model';
 
 @RestController('/api/store/address')
 export class StoreAddressController {
@@ -34,8 +34,8 @@ export class StoreAddressController {
   @Get('/:address')
   public async getInfoAction(@PathParam('address') address: string, @Res() res: Express.Response) {
     address = Mongodb.ObjectID(address);
-    let address = await this.storeAddressService.getAddressById(address);
+    let addr = await this.storeAddressService.getAddressById(address);
 
-    res.sendJson(address);
+    res.sendJson(addr);
   }
 }

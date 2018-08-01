@@ -19,7 +19,7 @@ export class CartController {
   }
 
   @Put('/add')
-  public async addAction(@BodyParam('goods') goods: String, @BodyParam('nums') nums: Number, @BodyParam @Res() res: Express.Response) {
+  public async addAction(@BodyParam('goods') goods: String, @BodyParam('nums') nums: Number, @Req() req: Express.Request, @Res() res: Express.Response) {
     let user: User = req.user;
     goods = Mongodb.ObjectID(goods);
 
@@ -29,7 +29,7 @@ export class CartController {
   }
 
   @Put('/remove')
-  public async removeAction(@BodyParam('goods') goods: String, @Res() res: Express.Response) {
+  public async removeAction(@BodyParam('goods') goods: String, @Res() res: Express.Response, @Req() req: Express.Request) {
     let user: User = req.user;
     goods = Mongodb.ObjectID(goods);
 

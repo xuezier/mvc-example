@@ -32,4 +32,7 @@ export class File {
     server_url: string;
   };
   create_at: Date;
+
+  public schema?(schema: any): any {}
+  public getCollection?(): any {}
 }

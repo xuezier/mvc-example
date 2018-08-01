@@ -2,7 +2,7 @@ import {Settings, RpcRegistry} from 'grpc-server-ts';
 import { SettingsRestry } from './SettingsRegistry';
 
 export class ServiceRpcRegistry {
-  static private _service: RpcRegistry;
+  private static _service: RpcRegistry;
 
   static get service() {
     return this._service;
@@ -14,11 +14,11 @@ export class ServiceRpcRegistry {
     this._start();
   }
 
-  static private _start() {
+  private static _start() {
     this.service.start();
   }
 
-  static private _loadRpcService() {
+  private static _loadRpcService() {
     @Settings(SettingsRestry.settings)
     class service extends RpcRegistry {}
 

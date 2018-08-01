@@ -11,7 +11,7 @@ class OrderService {
   }
 
   @Route
-  public async getList(getParam: { page: number, pagesize: numbner }) {
+  public async getList(getParam: { page: number, pagesize: number }) {
 
   }
 }
