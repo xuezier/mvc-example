@@ -2,6 +2,7 @@
 
 ## create address
 Post /api/store/address
+
 param|name|type|des
 -----|----|----|---
 key|mobile|String|
@@ -21,6 +22,7 @@ key|address.zip|String|
 
 ## modify address
 Put /api/store/address/modify/:address_id
+
 param|name|type|des
 -----|----|----|---
 param|address_id|String|address _id

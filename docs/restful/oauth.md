@@ -2,6 +2,7 @@
 
 ## get access token
 Post /oauth/token
+
 param|name|type|des
 -----|----|----|---
 key|client_id|String|oauth clientId
@@ -12,6 +13,7 @@ key|password|String|user account password
 
 ## get authorization code
 Post /oauth/authorize
+
 ```json
 {
   "headers": {
@@ -19,6 +21,7 @@ Post /oauth/authorize
   }
 }
 ```
+
 param|name|type|des
 -----|----|----|---
 key|client_id|String|authorization code clientId

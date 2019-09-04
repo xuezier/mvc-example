@@ -2,6 +2,7 @@
 
 ## create store
 Post /api/store
+
 param|name|type|des
 -----|----|----|---
 key|name|String|store name
@@ -12,6 +13,7 @@ key|description|String|store description
 
 ## set store address
 Put /api/store/set/address
+
 param|name|type|des
 -----|----|----|---
 key|address|String|address _id

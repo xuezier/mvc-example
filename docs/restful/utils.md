@@ -2,6 +2,7 @@
 
 ## request sms code
 Post /util/sms
+
 param|name|type|des
 -----|----|----|---
 key|mobile|String|user mobile number
@@ -10,6 +11,7 @@ key|hex|String|mobile number encrypted hash by rsa, param *code*, *hex* just onl
 
 ## request image code
 Get /util/code/image
+
 param|name|type|des
 -----|----|----|---
 query|mobile|String|user mobile number
